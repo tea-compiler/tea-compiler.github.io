@@ -2,7 +2,7 @@
 
 # Site settings
 title: 编译原理 - Compilation Principles
-description: Official website for CS30017 Compilation Principles course at Fudan University (Fall 2026)
+description: 复旦大学编译原理课程主页 (2026年春)
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://tea-compiler.github.io" # the base hostname & protocol for your site
 
