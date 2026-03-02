@@ -153,3 +153,8 @@ a:hover {
     padding: 15px;
   }
 }
+
+/* Hide footer (fallback in case footer include is not empty) */
+.site-footer {
+  display: none !important;
+}
