@@ -13,3 +13,20 @@ Gemfile.lock
 # Backup files
 *.backup
 *~
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+.venv/
+
+.idea/
+.vscode/
+.cursor/
+*.swp
+
+.env
+.env.local

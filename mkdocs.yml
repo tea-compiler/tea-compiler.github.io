@@ -1,0 +1,4 @@
+site_name: 编译原理 (复旦大学 2026年春季学期)
+site_url: https://tea-compiler.github.io/
+theme:
+  name: material
