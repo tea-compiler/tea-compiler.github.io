@@ -1,0 +1,56 @@
+site_name: 编译原理 (复旦大学 2026年春季学期)
+site_url: https://tea-compiler.github.io/
+
+theme:
+  name: material
+  language: zh
+  static_templates:
+    - 404.html
+  include_search_page: false
+  search_index_only: true
+
+  features:
+    - header.autohide
+    - navigation.tracking
+    - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
+    - content.code.annotate
+
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+  font:
+    text: Roboto Slab
+    code: Roboto Mono
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - footnotes
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+  - git-revision-date:
+  - minify:
+      minify_html: true
+  - open-in-new-tab:
+
+nav:
+  - 课程信息: "index.md"
+  - 实验1 Rust Essentials: "pj0.md"
