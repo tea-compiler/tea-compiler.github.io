@@ -53,4 +53,4 @@ plugins:
 
 nav:
   - 课程信息: "index.md"
-  - 实验1 Rust Essentials: "pj0.md"
+  - 实验一 Rust Essentials: "pj0.md"
