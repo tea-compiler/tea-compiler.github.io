@@ -66,18 +66,21 @@ b = 1;
 - `char`：**utf-8 字符**，实际可能占多个字节
 
 - `(T1, ... )`：元组，使用`.0`， `.1`来访问元素
+  
   ```rust
   let mut tuple: (i32, i32, i32) = (1, 2, 3);
   tuple.0 = 4;
   ```
 
 - `[T; len]`：数组，使用下标访问，超出数组长度会报错(编译期/运行期)
+  
   ```rust
   let mut array: [i32; 3] = [1, 2, 3];
   array[3] = 4; //error, out of length!
   ```
 
 - `Vec<T>`：变长数组，使用下标[...]访问，运行时进行边界检查。文档：[Vec in std::vec - Rust](https://doc.rust-lang.org/std/vec/struct.Vec.html)
+  
   ```rust
   let mut a = Vec::new();
   a.push(1);
@@ -88,6 +91,7 @@ b = 1;
   ```
 
 - `String`：utf-8字符串。文档：[String in std::string - Rust](https://doc.rust-lang.org/std/string/struct.String.html)
+  
   ```rust
   let mut a = String::from("这是一个字符串！");
   
