@@ -57,46 +57,45 @@ b = 1;
 
 常见的数据类型有如下几类，很多时候我们不需要显示地指定数据类型，因为 Rust 编译器会帮我们自动推导类型，但是 `mut` 依旧需要标注。
 
-- `i8`, `i16`, `i32`, `i64`, `i128`, `isize`：有符号整数，`isize` 表示大小取决于系统
+`i8`, `i16`, `i32`, `i64`, `i128`, `isize`：有符号整数，`isize` 表示大小取决于系统
 
-- `u8`, ..., `usize`：无符号整数
+`u8`, ..., `usize`：无符号整数
 
-- `f32`, `f64`：浮点数
+`f32`, `f64`：浮点数
 
-- `char`：**utf-8 字符**，实际可能占多个字节
+`char`：**utf-8 字符**，实际可能占多个字节
 
-- `(T1, ... )`：元组，使用`.0`， `.1`来访问元素
+`(T1, ... )`：元组，使用`.0`， `.1`来访问元素
   
-  ```rust
-  let mut tuple: (i32, i32, i32) = (1, 2, 3);
-  tuple.0 = 4;
-  ```
+```rust
+let mut tuple: (i32, i32, i32) = (1, 2, 3);
+tuple.0 = 4;
+```
 
-- `[T; len]`：数组，使用下标访问，超出数组长度会报错(编译期/运行期)
+`[T; len]`：数组，使用下标访问，超出数组长度会报错(编译期/运行期)
   
-  ```rust
-  let mut array: [i32; 3] = [1, 2, 3];
-  array[3] = 4; //error, out of length!
-  ```
+```rust
+let mut array: [i32; 3] = [1, 2, 3];
+array[3] = 4; //error, out of length!
+```
 
-- `Vec<T>`：变长数组，使用下标[...]访问，运行时进行边界检查。文档：[Vec in std::vec - Rust](https://doc.rust-lang.org/std/vec/struct.Vec.html)
+`Vec<T>`：变长数组，使用下标[...]访问，运行时进行边界检查。文档：[Vec in std::vec - Rust](https://doc.rust-lang.org/std/vec/struct.Vec.html)
   
-  ```rust
-  let mut a = Vec::new();
-  a.push(1);
-  a.push(2); //这里自动推导出a的类型是Vec<i32>
+```rust
+let mut a = Vec::new();
+a.push(1);
+a.push(2); //这里自动推导出a的类型是Vec<i32>
   
-  let mut b = vec![1, 2]; //这里自动推导出b的类型是Vec<i32>
-  println!("{}", b[0]);
-  ```
+let mut b = vec![1, 2]; //这里自动推导出b的类型是Vec<i32>
+println!("{}", b[0]);
+```
 
-- `String`：utf-8字符串。文档：[String in std::string - Rust](https://doc.rust-lang.org/std/string/struct.String.html)
+`String`：utf-8字符串。文档：[String in std::string - Rust](https://doc.rust-lang.org/std/string/struct.String.html)
   
-  ```rust
-  let mut a = String::from("这是一个字符串！");
-  
-  a.push_str("这是添加到末尾的部分！");
-  ```
+```rust
+let mut a = String::from("这是一个字符串！");
+a.push_str("这是添加到末尾的部分！");
+```
 
 Rust 中使用 `fn` 关键字声明函数，参数列表的声明方式和变量相同，使用 `->` 标记指定函数的返回值类型。
 
