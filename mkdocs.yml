@@ -8,6 +8,7 @@ theme:
     - 404.html
   include_search_page: false
   search_index_only: true
+  custom_dir: overrides
 
   features:
     - header.autohide
@@ -53,4 +54,4 @@ plugins:
 
 nav:
   - 课程信息: "index.md"
-  - 实验一 Rust Essentials: "pj0.md"
+  - 实验零 Rust 介绍（上）: "project/rust-intro.md"
