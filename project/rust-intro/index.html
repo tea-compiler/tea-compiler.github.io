@@ -6,7 +6,19 @@ a = 1; // error! a is immutable
 
 let mut b: i32 = 0;
 b = 1;
-</code></pre> <blockquote> <p><code>mut</code> 更多用于修饰借用，类似读写锁互斥的思路，一个对象可以同时有多个不可变借用，但可变借用却必须独占变量。</p> </blockquote> <p>常见的数据类型有如下几类，很多时候我们不需要显示地指定数据类型，因为 Rust 编译器会帮我们自动推导类型，但是 <code>mut</code> 依旧需要标注。</p> <ul> <li> <p><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>, <code>isize</code>：有符号整数，<code>isize</code> 表示大小取决于系统</p> </li> <li> <p><code>u8</code>, ..., <code>usize</code>：无符号整数</p> </li> <li> <p><code>f32</code>, <code>f64</code>：浮点数</p> </li> <li> <p><code>char</code>：<strong>utf-8 字符</strong>，实际可能占多个字节</p> </li> <li> <p><code>(T1, ... )</code>：元组，使用<code>.0</code>， <code>.1</code>来访问元素</p> </li> </ul> <p><code>rust let mut tuple: (i32, i32, i32) = (1, 2, 3); tuple.0 = 4;</code></p> <ul> <li><code>[T; len]</code>：数组，使用下标访问，超出数组长度会报错(编译期/运行期)</li> </ul> <p><code>rust let mut array: [i32; 3] = [1, 2, 3]; array[3] = 4; //error, out of length!</code></p> <ul> <li><code>Vec&lt;T&gt;</code>：变长数组，使用下标[...]访问，运行时进行边界检查。文档：<a href=https://doc.rust-lang.org/std/vec/struct.Vec.html>Vec in std::vec - Rust</a></li> </ul> <p>```rust let mut a = Vec::new(); a.push(1); a.push(2); //这里自动推导出a的类型是Vec<i32></p> <p>let mut b = vec![1, 2]; //这里自动推导出b的类型是Vec<i32> println!("{}", b[0]); ```</p> <ul> <li><code>String</code>：utf-8字符串。文档：<a href=https://doc.rust-lang.org/std/string/struct.String.html>String in std::string - Rust</a></li> </ul> <p>```rust let mut a = String::from("这是一个字符串！");</p> <p>a.push_str("这是添加到末尾的部分！"); ```</p> <p>Rust 中使用 <code>fn</code> 关键字声明函数，参数列表的声明方式和变量相同，使用 <code>-&gt;</code> 标记指定函数的返回值类型。</p> <pre><code class=language-rust>fn echo(mut val: i32) { //不需要返回值
+</code></pre> <blockquote> <p><code>mut</code> 更多用于修饰借用，类似读写锁互斥的思路，一个对象可以同时有多个不可变借用，但可变借用却必须独占变量。</p> </blockquote> <p>常见的数据类型有如下几类，很多时候我们不需要显示地指定数据类型，因为 Rust 编译器会帮我们自动推导类型，但是 <code>mut</code> 依旧需要标注。</p> <p><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>, <code>isize</code>：有符号整数，<code>isize</code> 表示大小取决于系统</p> <p><code>u8</code>, ..., <code>usize</code>：无符号整数</p> <p><code>f32</code>, <code>f64</code>：浮点数</p> <p><code>char</code>：<strong>utf-8 字符</strong>，实际可能占多个字节</p> <p><code>(T1, ... )</code>：元组，使用<code>.0</code>， <code>.1</code>来访问元素</p> <pre><code class=language-rust>let mut tuple: (i32, i32, i32) = (1, 2, 3);
+tuple.0 = 4;
+</code></pre> <p><code>[T; len]</code>：数组，使用下标访问，超出数组长度会报错(编译期/运行期)</p> <pre><code class=language-rust>let mut array: [i32; 3] = [1, 2, 3];
+array[3] = 4; //error, out of length!
+</code></pre> <p><code>Vec&lt;T&gt;</code>：变长数组，使用下标[...]访问，运行时进行边界检查。文档：<a href=https://doc.rust-lang.org/std/vec/struct.Vec.html>Vec in std::vec - Rust</a></p> <pre><code class=language-rust>let mut a = Vec::new();
+a.push(1);
+a.push(2); //这里自动推导出a的类型是Vec&lt;i32&gt;
+
+let mut b = vec![1, 2]; //这里自动推导出b的类型是Vec&lt;i32&gt;
+println!(&quot;{}&quot;, b[0]);
+</code></pre> <p><code>String</code>：utf-8字符串。文档：<a href=https://doc.rust-lang.org/std/string/struct.String.html>String in std::string - Rust</a></p> <pre><code class=language-rust>let mut a = String::from(&quot;这是一个字符串！&quot;);
+a.push_str(&quot;这是添加到末尾的部分！&quot;);
+</code></pre> <p>Rust 中使用 <code>fn</code> 关键字声明函数，参数列表的声明方式和变量相同，使用 <code>-&gt;</code> 标记指定函数的返回值类型。</p> <pre><code class=language-rust>fn echo(mut val: i32) { //不需要返回值
     println!(&quot;The value is: {val}&quot;); //以语句结尾，类型是()
 }
 
