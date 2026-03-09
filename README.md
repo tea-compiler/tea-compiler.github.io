@@ -13,7 +13,7 @@
 | 周 | 课程内容 | 课件 | 实验内容 | 实验讲义 |
 |:--:|:--------:|:----:|:--------:|:----:|
 | 1 | 课程入门 | [slides](slides/L1-课程介绍.pdf), [notes](notes/第1章-课程介绍.pdf) | Rust 1 | [notes](notes/Rust介绍（上）.pdf) |
-| 2 | 词法分析 | <!--[slides](slides/L2-词法分析.pdf)--> | Rust 2 | |
+| 2 | 词法分析 | [slides](slides/L2-词法分析.pdf) | Rust 2 | |
 | 3 | 上下文无关文法 | <!--[slides](slides/L3-上下文无关文法.pdf)--> | 布置实验一 | |
 | 4 | 自顶向下解析 | <!--[slides](slides/L4-自顶向下解析.pdf)--> | 答疑 | |
 | 5 | 自底向上解析 | <!--[slides](slides/L5-自底向上解析.pdf)--> | 答疑 | |
