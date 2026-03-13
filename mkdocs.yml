@@ -55,3 +55,4 @@ plugins:
 nav:
   - 课程信息: "index.md"
   - 实验零 Rust 介绍（上）: "project/rust-intro.md"
+  - 实验零 Rust 介绍（下）: "project/rust-intro-2.md"
