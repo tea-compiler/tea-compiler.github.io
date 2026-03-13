@@ -18,7 +18,7 @@ let foo2 = Foo {
     b: 123
     ..foo1 //这表示剩余没有初始化的成员都使用foo1中的成员进行初始化
 };
-</code></pre> <p>在上面这个例子中，如果我们尝试再使用<code>foo</code>，会发现我们可以正常读取<code>foo.b</code>，但是<code>foo.a</code>却会提示其所有权已经被移动。这是因为Rust中结构体可以<strong>部分移动</strong>，即<strong>移动某个字段</strong>，此时这个结构体<strong>不可以再作为一个整体使用</strong>，但是其他字段还可以正常使用。</p> <p>另外还有两种结构体定义方式：</p> <pre><code class=language-rust>struct Color(i32, i32, i32); //元组结构体
+</code></pre> <p>在上面这个例子中，如果我们尝试再使用<code>foo1</code>，会发现我们可以正常读取<code>foo1.b</code>，但是<code>foo1.a</code>却会提示其所有权已经被移动。这是因为Rust中结构体可以<strong>部分移动</strong>，即<strong>移动某个字段</strong>，此时这个结构体<strong>不可以再作为一个整体使用</strong>，但是其他字段还可以正常使用。</p> <p>另外还有两种结构体定义方式：</p> <pre><code class=language-rust>struct Color(i32, i32, i32); //元组结构体
 struct AlwaysEqual; //类单元结构体
 
 let red = Color(255, 0, 0); //字面构造
@@ -279,7 +279,7 @@ println!(&quot;在外部作用域: {}&quot;, result);  // 潜在悬垂引用
 </code></pre> <blockquote> <p>这里str是String的不可变切片类型，&amp;str就是一段不可变字符串切片的借用</p> </blockquote> <p>由于<code>longest</code>的返回值既可能是x也可能是y，那么编译器在调用函数处就没有办法直接检查是否合法。在上面的代码示例中，第一次print，result是合法的，而第二次print就不合法了，因为y已经被释放，result成了<strong>悬垂引用</strong>。</p> <p>使用生命周期泛型，我们可以给函数添加额外的生命周期<strong>约束</strong>用于编译器的检查。</p> <pre><code class=language-rust>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str { //Correct！
     if x.len() &gt; y.len() { x } else { y }
 }
-</code></pre> <p>这里的意思是说，我们定义了一个生命周期泛型<code>'a</code>，x和y都需要被这个<code>'a</code>生命周期约束（即x和y的生命周期都&gt;=<code>'a</code>）。假设它们的生命周期分别为$L_x$和$L_y$，那么这里$'a\subset L_x\cap L_y$，因为要求x和y都能缩短到<code>'a</code>。而返回出来的引用被使用的范围$R$则需要在<code>'a</code>的范围内，即$R\subset 'a \subset L_x\cap L_y$。</p> <blockquote> <p>用不严谨的话说：</p> <ul> <li>赋值/传参时，借用的生命周期只允许缩小，不允许放大。</li> <li>条件1：x和y从外部赋值到函数内部 =&gt; x,y生命周期 &gt;= <code>'a</code> =&gt; </li> <li>条件2：拥有<code>'a</code>生命周期的返回值返回出去，在外面赋值给了新的引用 =&gt; <code>'a</code> &gt;= 新引用的生命周期</li> <li>综合下来就得到结果：返回借用的使用范围应该在参数生命周期的交集中</li> </ul> </blockquote> <p>一个更好的理解方式是：Rust中的借用存在<strong>Reborrow</strong>，编译器会将借用的生命周期缩短直到适配，<strong>生命周期的作用就是标记重借用时不同引用的相对关系</strong>，<strong>而非代表某个固定的范围</strong>。</p> <pre><code class=language-rust>fn main() {
+</code></pre> <p>这里的意思是说，我们定义了一个生命周期泛型<code>'a</code>，x和y都需要被这个<code>'a</code>生命周期约束（即x和y的生命周期都&gt;=<code>'a</code>）。假设它们的生命周期分别为$L_x$和$L_y$，那么这里$'a\subset L_x\cap L_y$，因为要求x和y都能缩短到<code>'a</code>。而返回出来的引用被使用的范围$R$则需要在<code>'a</code>的范围内，即$R\subset 'a \subset L_x\cap L_y$。</p> <blockquote> <p>用不严谨的话说：</p> <ul> <li>赋值/传参时，借用的生命周期只允许缩小，不允许放大。</li> <li>条件1：x和y从外部赋值到函数内部 =&gt; x,y生命周期 &gt;= <code>'a</code> </li> <li>条件2：拥有<code>'a</code>生命周期的返回值返回出去，在外面赋值给了新的引用 =&gt; <code>'a</code> &gt;= 新引用的生命周期</li> <li>综合下来就得到结果：返回借用的使用范围应该在参数生命周期的交集中</li> </ul> </blockquote> <p>一个更好的理解方式是：Rust中的借用存在<strong>Reborrow</strong>，编译器会将借用的生命周期缩短直到适配，<strong>生命周期的作用就是标记重借用时不同引用的相对关系</strong>，<strong>而非代表某个固定的范围</strong>。</p> <pre><code class=language-rust>fn main() {
     let string1 = String::from(&quot;long string is long&quot;);
 
     {
@@ -336,7 +336,7 @@ fn main() {
         println!(&quot;{}&quot;, result);
     }
 }
-</code></pre> <aside class=md-source-file> <span class=md-source-file__fact> <span class=md-icon title=最后更新> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg> </span> 2026-03-12 </span> </aside> <!-- Insert generated snippet here --> <script src=https://giscus.app/client.js data-repo=tea-compiler/tea-compiler.github.io data-repo-id=R_kgDOJ7xC6g data-category=General data-category-id=DIC_kwDOGP67ns4COM9Q data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light_protanopia data-lang=zh-CN data-loading=lazy crossorigin=anonymous async>
+</code></pre> <aside class=md-source-file> <span class=md-source-file__fact> <span class=md-icon title=最后更新> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg> </span> 2026-03-13 </span> </aside> <!-- Insert generated snippet here --> <script src=https://giscus.app/client.js data-repo=tea-compiler/tea-compiler.github.io data-repo-id=R_kgDOJ7xC6g data-category=General data-category-id=DIC_kwDOGP67ns4COM9Q data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light_protanopia data-lang=zh-CN data-loading=lazy crossorigin=anonymous async>
 </script> <!-- Synchronize Giscus theme with palette --> <script>
 var giscus = document.querySelector("script[src*=giscus]")
 
