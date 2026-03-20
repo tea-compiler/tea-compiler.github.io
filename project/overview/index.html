@@ -1,0 +1,176 @@
+<!doctype html><html lang=zh class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href=https://tea-compiler.github.io/project/overview/ rel=canonical><link href=../rust-intro-2/ rel=prev><link rel=icon href=../../assets/images/favicon.png><meta name=generator content="mkdocs-1.6.1, mkdocs-material-9.7.4"><title>实验总览 - 编译原理 (复旦大学 2026年春季学期)</title><link rel=stylesheet href=../../assets/stylesheets/main.484c7ddc.min.css><link rel=stylesheet href=../../assets/stylesheets/palette.ab4e12ef.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Roboto Slab";--md-code-font:"Roboto Mono"}</style><script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=indigo> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#_1 class=md-skip> 跳转至 </a> </div> <div data-md-component=announce> </div> <header class="md-header md-header--shadow" data-md-component=header> <nav class="md-header__inner md-grid" aria-label=页眉> <a href=../.. title="编译原理 (复旦大学 2026年春季学期)" class="md-header__button md-logo" aria-label="编译原理 (复旦大学 2026年春季学期)" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> 编译原理 (复旦大学 2026年春季学期) </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> 实验总览 </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=indigo aria-label="Switch to dark mode" type=radio name=__palette id=__palette_0> <label class="md-header__button md-icon" title="Switch to dark mode" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg> </label> <input class=md-option data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme=slate data-md-color-primary=indigo data-md-color-accent=indigo aria-label="Switch to light mode" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Switch to light mode" for=__palette_0 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg> </label> </form> <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=搜索 placeholder=搜索 autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg> </label> <nav class=md-search__options aria-label=查找> <a href=javascript:void(0) class="md-search__icon md-icon" title=分享 aria-label=分享 data-clipboard data-clipboard-text data-md-component=search-share tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg> </a> <button type=reset class="md-search__icon md-icon" title=清空当前内容 aria-label=清空当前内容 tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> </button> </nav> <div class=md-search__suggest data-md-component=search-suggest></div> </form> <div class=md-search__output> <div class=md-search__scrollwrap tabindex=0 data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> 正在初始化搜索引擎 </div> <ol class=md-search-result__list role=presentation></ol> </div> </div> </div> </div> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary" aria-label=导航栏 data-md-level=0> <label class=md-nav__title for=__drawer> <a href=../.. title="编译原理 (复旦大学 2026年春季学期)" class="md-nav__button md-logo" aria-label="编译原理 (复旦大学 2026年春季学期)" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg> </a> 编译原理 (复旦大学 2026年春季学期) </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../.. class=md-nav__link> <span class=md-ellipsis> 课程信息 </span> </a> </li> <li class=md-nav__item> <a href=../rust-intro/ class=md-nav__link> <span class=md-ellipsis> Rust 介绍（上） </span> </a> </li> <li class=md-nav__item> <a href=../rust-intro-2/ class=md-nav__link> <span class=md-ellipsis> Rust 介绍（下） </span> </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> <span class=md-ellipsis> 实验总览 </span> <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> <span class=md-ellipsis> 实验总览 </span> </a> <nav class="md-nav md-nav--secondary" aria-label=目录> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> 目录 </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#_2 class=md-nav__link> <span class=md-ellipsis> 多维数组 </span> </a> <nav class=md-nav aria-label=多维数组> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_3 class=md-nav__link> <span class=md-ellipsis> 数组类型 </span> </a> </li> <li class=md-nav__item> <a href=#_4 class=md-nav__link> <span class=md-ellipsis> 索引 </span> </a> </li> <li class=md-nav__item> <a href=#_5 class=md-nav__link> <span class=md-ellipsis> 示例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#for class=md-nav__link> <span class=md-ellipsis> for 循环 </span> </a> <nav class=md-nav aria-label="for 循环"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#for_1 class=md-nav__link> <span class=md-ellipsis> for 语句 </span> </a> </li> <li class=md-nav__item> <a href=#_6 class=md-nav__link> <span class=md-ellipsis> 语义 </span> </a> </li> <li class=md-nav__item> <a href=#_7 class=md-nav__link> <span class=md-ellipsis> 示例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#impl class=md-nav__link> <span class=md-ellipsis> impl 块与方法 </span> </a> <nav class=md-nav aria-label="impl 块与方法"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#impl_1 class=md-nav__link> <span class=md-ellipsis> impl 块定义 </span> </a> </li> <li class=md-nav__item> <a href=#self class=md-nav__link> <span class=md-ellipsis> self 参数 </span> </a> </li> <li class=md-nav__item> <a href=#_8 class=md-nav__link> <span class=md-ellipsis> 方法调用 </span> </a> </li> <li class=md-nav__item> <a href=#_9 class=md-nav__link> <span class=md-ellipsis> 示例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#f32 class=md-nav__link> <span class=md-ellipsis> 浮点类型 (f32) 与浮点字面量 </span> </a> <nav class=md-nav aria-label="浮点类型 (f32) 与浮点字面量"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_10 class=md-nav__link> <span class=md-ellipsis> 浮点字面量 </span> </a> </li> <li class=md-nav__item> <a href=#_11 class=md-nav__link> <span class=md-ellipsis> 类型系统变更 </span> </a> </li> <li class=md-nav__item> <a href=#_12 class=md-nav__link> <span class=md-ellipsis> 表达式单元变更 </span> </a> </li> <li class=md-nav__item> <a href=#_13 class=md-nav__link> <span class=md-ellipsis> 示例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#as class=md-nav__link> <span class=md-ellipsis> 类型转换 (as) </span> </a> <nav class=md-nav aria-label="类型转换 (as)"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#cast class=md-nav__link> <span class=md-ellipsis> Cast 表达式 </span> </a> </li> <li class=md-nav__item> <a href=#_14 class=md-nav__link> <span class=md-ellipsis> 示例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#_15 class=md-nav__link> <span class=md-ellipsis> 语法规则变更汇总 </span> </a> <nav class=md-nav aria-label=语法规则变更汇总> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_16 class=md-nav__link> <span class=md-ellipsis> 新增规则 </span> </a> </li> <li class=md-nav__item> <a href=#_17 class=md-nav__link> <span class=md-ellipsis> 修改的现有规则 </span> </a> </li> <li class=md-nav__item> <a href=#_18 class=md-nav__link> <span class=md-ellipsis> 新增关键字 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#_19 class=md-nav__link> <span class=md-ellipsis> 运算符优先级 </span> </a> </li> <li class=md-nav__item> <a href=#_20 class=md-nav__link> <span class=md-ellipsis> 完整示例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../asmt-1.md class=md-nav__link> <span class=md-ellipsis> 实验一 解析抽象语法树 </span> </a> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label=目录> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> 目录 </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#_2 class=md-nav__link> <span class=md-ellipsis> 多维数组 </span> </a> <nav class=md-nav aria-label=多维数组> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_3 class=md-nav__link> <span class=md-ellipsis> 数组类型 </span> </a> </li> <li class=md-nav__item> <a href=#_4 class=md-nav__link> <span class=md-ellipsis> 索引 </span> </a> </li> <li class=md-nav__item> <a href=#_5 class=md-nav__link> <span class=md-ellipsis> 示例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#for class=md-nav__link> <span class=md-ellipsis> for 循环 </span> </a> <nav class=md-nav aria-label="for 循环"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#for_1 class=md-nav__link> <span class=md-ellipsis> for 语句 </span> </a> </li> <li class=md-nav__item> <a href=#_6 class=md-nav__link> <span class=md-ellipsis> 语义 </span> </a> </li> <li class=md-nav__item> <a href=#_7 class=md-nav__link> <span class=md-ellipsis> 示例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#impl class=md-nav__link> <span class=md-ellipsis> impl 块与方法 </span> </a> <nav class=md-nav aria-label="impl 块与方法"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#impl_1 class=md-nav__link> <span class=md-ellipsis> impl 块定义 </span> </a> </li> <li class=md-nav__item> <a href=#self class=md-nav__link> <span class=md-ellipsis> self 参数 </span> </a> </li> <li class=md-nav__item> <a href=#_8 class=md-nav__link> <span class=md-ellipsis> 方法调用 </span> </a> </li> <li class=md-nav__item> <a href=#_9 class=md-nav__link> <span class=md-ellipsis> 示例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#f32 class=md-nav__link> <span class=md-ellipsis> 浮点类型 (f32) 与浮点字面量 </span> </a> <nav class=md-nav aria-label="浮点类型 (f32) 与浮点字面量"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_10 class=md-nav__link> <span class=md-ellipsis> 浮点字面量 </span> </a> </li> <li class=md-nav__item> <a href=#_11 class=md-nav__link> <span class=md-ellipsis> 类型系统变更 </span> </a> </li> <li class=md-nav__item> <a href=#_12 class=md-nav__link> <span class=md-ellipsis> 表达式单元变更 </span> </a> </li> <li class=md-nav__item> <a href=#_13 class=md-nav__link> <span class=md-ellipsis> 示例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#as class=md-nav__link> <span class=md-ellipsis> 类型转换 (as) </span> </a> <nav class=md-nav aria-label="类型转换 (as)"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#cast class=md-nav__link> <span class=md-ellipsis> Cast 表达式 </span> </a> </li> <li class=md-nav__item> <a href=#_14 class=md-nav__link> <span class=md-ellipsis> 示例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#_15 class=md-nav__link> <span class=md-ellipsis> 语法规则变更汇总 </span> </a> <nav class=md-nav aria-label=语法规则变更汇总> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_16 class=md-nav__link> <span class=md-ellipsis> 新增规则 </span> </a> </li> <li class=md-nav__item> <a href=#_17 class=md-nav__link> <span class=md-ellipsis> 修改的现有规则 </span> </a> </li> <li class=md-nav__item> <a href=#_18 class=md-nav__link> <span class=md-ellipsis> 新增关键字 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#_19 class=md-nav__link> <span class=md-ellipsis> 运算符优先级 </span> </a> </li> <li class=md-nav__item> <a href=#_20 class=md-nav__link> <span class=md-ellipsis> 完整示例 </span> </a> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <h1 id=_1>实验总览</h1> <p>本学期课程实验中，我们将基于 teac，拓展 TeaLang 的语法，涵盖 浮点类型 (<code>f32</code>)、多维数组、类型转换、<code>for</code> 循环、<code>impl</code> 块与方法，帮助大家在实践中理解编译器的语法解析、IR 生成、优化和后端代码生成。此外，学有余力的同学可以在 bonus 中自行实现感兴趣的语法特性，或对 teac 当前实现做出有意义的改进（即被合并进入 teac 主分支）。</p> <p>实验分数构成为：</p> <ol> <li>多维数组、<code>for</code> 循环、<code>impl</code> 块与方法<strong>三选一</strong>，60 分；</li> <li>浮点类型 (<code>f32</code>) + 类型转换 (<code>as</code>) 必做，30 分；</li> <li>Bonus 开放任务，10 分。</li> </ol> <h2 id=_2>多维数组</h2> <h3 id=_3>数组类型</h3> <p>新增 <code>arrayType</code> 规则，通过递归支持任意维度：</p> <pre><code>arrayType := &lt; [ &gt; typeSpec &lt; ; &gt; num &lt; ] &gt;
+</code></pre> <p><code>typeSpec</code> 修改后包含 <code>arrayType</code>。这使得嵌套类型如 <code>[[i32; 4]; 3]</code> 能被正确解析。其外层由 <code>typed_array_decl</code> 匹配 <code>identifier : [ typeSpec ; num ]</code>，内层 <code>[i32; 4]</code> 由 <code>typeSpec → arrayType</code> 匹配。</p> <h3 id=_4>索引</h3> <p>多维数组索引通过链式 <code>exprSuffix</code> 实现，无需额外改动。<code>mat[i][j]</code> 中，第一个 <code>[i]</code> 是一个 <code>exprSuffix</code>，第二个 <code>[j]</code> 是另一个 <code>exprSuffix</code>。</p> <h3 id=_5>示例</h3> <pre><code class=language-rust>let mat: [[i32; 4]; 3];           // 2D: 3 行 × 4 列
+let cube: [[[i32; 4]; 3]; 2];     // 3D
+let q: [[[[i32; 16]; 8]; 4]; 2];  // 4D
+mat[i][j] = val;
+let v:i32 = cube[i][j][k];
+let row: [f32; 3];                // f32 数组
+</code></pre> <h2 id=for><code>for</code> 循环</h2> <h3 id=for_1><code>for</code> 语句</h3> <p>新增 <code>forStmt</code> 和 <code>rangeBound</code> 规则：</p> <pre><code>forStmt := &lt; for &gt; identifier &lt; in &gt; rangeBound &lt; .. &gt; rangeBound
+           &lt; { &gt; codeBlockStmt* &lt; } &gt;
+
+rangeBound := &lt; ( &gt; arithExpr &lt; ) &gt;     // 括号表达式
+            | fnCall                     // 函数调用
+            | num                        // 数字字面量
+            | identifier                 // 变量
+</code></pre> <blockquote> <p><strong>实现提示</strong>：<code>..</code> 须定义为原子 token（如 <code>dot_dot = @{ ".." }</code>），不可拆为两个 <code>dot</code>。<code>rangeBound</code> 不支持负字面量（如 <code>-5</code>），需使用括号形式 <code>(-5)</code>。</p> </blockquote> <p><code>codeBlockStmt</code> 修改为包含 <code>forStmt</code>：</p> <pre><code>codeBlockStmt := varDeclStmt | assignmentStmt | callStmt | ifStmt
+               | whileStmt | forStmt | returnStmt | continueStmt
+               | breakStmt | nullStmt
+</code></pre> <h3 id=_6>语义</h3> <ul> <li>循环变量类型为 <code>i32</code>，作用域限定在循环体内</li> <li><code>..</code> 产生半开区间 <code>[start, end)</code></li> <li>循环变量从 <code>start</code> 开始，每次迭代加 1，<code>&gt;= end</code> 时退出</li> <li>若 <code>start &gt;= end</code>，循环体执行零次</li> <li>两个边界在循环开始前各求值一次</li> <li><code>break</code> 和 <code>continue</code> 与 while 循环行为一致</li> </ul> <h3 id=_7>示例</h3> <pre><code class=language-rust>for i in 0..10 { sum = sum + i; }         // 字面量边界
+for i in 0..n { sum = sum + i; }           // 变量边界
+for i in 0..get_limit() { fsum = fsum + i; }  // 函数调用边界
+for i in 1..(n + 1) { result = result * i; }  // 括号表达式边界
+for i in 5..5 { unreachable = 0; }         // 空范围，不执行
+
+// 嵌套 for 循环
+for i in 0..rows {
+    for j in 0..cols {
+        mat[i][j] = i * cols + j;
+    }
+}
+</code></pre> <h2 id=impl><code>impl</code> 块与方法</h2> <h3 id=impl_1><code>impl</code> 块定义</h3> <p>新增 <code>implDef</code> 规则，作为新的顶层元素加入 <code>program</code>：</p> <pre><code>implDef := &lt; impl &gt; identifier &lt; { &gt; fnDef* &lt; } &gt;
+</code></pre> <h3 id=self><code>self</code> 参数</h3> <p>方法的第一个参数可以是 <code>self</code> 参数，可以是不可变引用或可变引用：</p> <pre><code>selfParam := &lt; &amp; &gt; &lt; mut &gt; &lt; self &gt;      // 可变引用
+           | &lt; &amp; &gt; &lt; self &gt;               // 不可变引用
+</code></pre> <p><code>paramDecl</code> 修改为支持 self 参数：</p> <pre><code>paramDecl := selfParam (&lt; , &gt; varDeclList)?
+           | varDeclList
+</code></pre> <blockquote> <p><strong>实现提示</strong>：<code>self</code> 和 <code>Self</code> 在语法层面由 <code>identifier</code> 规则匹配，特殊语义在语义分析阶段处理。</p> </blockquote> <p>在方法体内，<code>self</code> 指代接收者实例：<code>self.field</code> 访问字段，<code>self.method(args)</code> 调用同类型方法。<code>Self</code> 是当前 impl 类型的别名，<code>Self::method(self, args)</code> 等价于 <code>TypeName::method(self, args)</code>，接收者须显式传递。</p> <h3 id=_8>方法调用</h3> <p>方法调用有两种语法：</p> <p><strong>点语法</strong>（dot syntax）：<code>receiver.method(args)</code> ，其中接收者隐式传递为 <code>self</code>。</p> <pre><code>methodCall := identifier exprSuffixNonMethod* &lt; . &gt; identifier
+              &lt; ( &gt; rightValList? &lt; ) &gt;
+
+exprSuffixNonMethod := &lt; [ &gt; indexExpr &lt; ] &gt;
+                     | &lt; . &gt; identifier    （仅当后面不跟 &lt; ( &gt; 时）
+</code></pre> <p><strong>静态语法</strong>（type-prefixed call）：<code>TypeName::method(receiver, args)</code> — 接收者显式作为首参数传递。<code>Self</code> 在 impl 块内是当前类型的别名，因此 <code>Self::method(self, args)</code> 等价于 <code>TypeName::method(self, args)</code>。</p> <p>静态语法与现有的 <code>modulePrefixedCall</code> 规则匹配，无需额外语法改动。</p> <p><code>fnCall</code> 修改为包含 <code>methodCall</code>：</p> <pre><code>fnCall := modulePrefixedCall | methodCall | localCall
+</code></pre> <h3 id=_9>示例</h3> <pre><code class=language-rust>// Impl 块定义
+impl Counter {
+    fn get(&amp;self) -&gt; i32 {
+        return self.value;
+    }
+
+    fn add(&amp;mut self, delta:i32) -&gt; i32 {
+        self.value = self.value + delta;
+        return self.value;
+    }
+
+    fn add_twice(&amp;mut self, delta:i32) -&gt; i32 {
+        self.add(delta);            // 点语法
+        Self::add(self, delta);     // 静态语法，Self 为类型别名
+        return Self::get(self);     // 等价于 Counter::get(self)
+    }
+}
+
+// 外部方法调用
+c[0].get()                  // 点语法
+arr[1].scale_add(3)         // 带参数的点语法
+b[0].pos.len1()             // 嵌套成员上的方法调用
+Counter::get(c[0])          // 静态语法（接收者显式传递）
+
+// impl 块内部方法调用
+self.add(delta)             // 点语法
+Self::add(self, delta)      // 静态语法，Self 为类型别名
+Self::get(self)             // 等价于 Counter::get(self)
+</code></pre> <h2 id=f32>浮点类型 (<code>f32</code>) 与浮点字面量</h2> <h3 id=_10>浮点字面量</h3> <p>新增 <code>floatLiteral</code> 规则——可选的整数部分 + 小数点 + 必须的小数部分：</p> <pre><code>floatLiteral := [0-9]* &lt; . &gt; [0-9]+
+</code></pre> <blockquote> <p><strong>实现提示</strong>：<code>floatLiteral</code> 在 Pest 中须标记为原子规则（<code>@</code>），内部不允许空白。</p> </blockquote> <p>示例：<code>3.14</code>, <code>2.0</code>, <code>.5</code>, <code>0.001</code>, <code>100.0</code></p> <h3 id=_11>类型系统变更</h3> <p><code>f32</code> 作为新的内建类型，与 <code>i32</code> 并列。<code>typeSpec</code> 规则修改为：</p> <pre><code>typeSpec := refType | arrayType | &lt; i32 &gt; | &lt; f32 &gt; | identifier
+</code></pre> <p><code>f32</code> 可用于变量声明、函数参数、函数返回值、数组元素类型等所有 <code>typeSpec</code> 出现的位置。</p> <h3 id=_12>表达式单元变更</h3> <p><code>exprUnit</code> 新增 <code>floatLiteral</code> 相关项。<code>floatLiteral</code> 必须在 <code>num</code> 之前尝试匹配，<code>&lt; - &gt; floatLiteral</code> 必须在 <code>&lt; - &gt; num</code> 之前：</p> <pre><code>exprUnit := &lt; ( &gt; arithExpr &lt; ) &gt;
+          | fnCall
+          | &lt; &amp; &gt; identifier
+          | &lt; - &gt; floatLiteral          // 负浮点数（新增）
+          | &lt; - &gt; num
+          | floatLiteral                // 浮点字面量（新增）
+          | num
+          | identifier exprSuffix*
+</code></pre> <h3 id=_13>示例</h3> <pre><code class=language-rust>let a:f32 = 3.14;
+let b:f32 = 2.0;
+let c:f32 = .5;            // 无整数部分
+fn fadd(a:f32, b:f32) -&gt; f32 { return a + b; }
+let row: [f32; 3];         // f32 数组
+fn dot(v: &amp;[f32]) -&gt; f32;  // f32 引用参数
+</code></pre> <h2 id=as>类型转换 (<code>as</code>)</h2> <h3 id=cast>Cast 表达式</h3> <p>新增 <code>castExpr</code> 规则，插入到算术表达式层次中，位于 <code>exprUnit</code> 之上、<code>arithTerm</code> 之内：</p> <pre><code>castExpr := exprUnit (&lt; as &gt; typeSpec)?
+</code></pre> <p><code>arithTerm</code> 修改为使用 <code>castExpr</code>：</p> <pre><code>arithTerm := castExpr (arithMulOp castExpr)*
+</code></pre> <p><code>as</code> 的绑定力高于算术运算符：<code>a + b as i32</code> 等价于 <code>a + (b as i32)</code>。</p> <h3 id=_14>示例</h3> <pre><code class=language-rust>let f:f32 = x as f32;         // i32 → f32
+let result:i32 = half as i32;  // f32 → i32（向零截断，如 -3.7 → -3）
+let v:i32 = r[i] as i32;      // 对数组元素做转换
+</code></pre> <h2 id=_15>语法规则变更汇总</h2> <h3 id=_16>新增规则</h3> <table> <thead> <tr> <th>规则</th> <th>定义</th> </tr> </thead> <tbody> <tr> <td><code>floatLiteral</code></td> <td><code>[0-9]* &lt; . &gt; [0-9]+</code></td> </tr> <tr> <td><code>arrayType</code></td> <td><code>&lt; [ &gt; typeSpec &lt; ; &gt; num &lt; ] &gt;</code></td> </tr> <tr> <td><code>castExpr</code></td> <td><code>exprUnit (&lt; as &gt; typeSpec)?</code></td> </tr> <tr> <td><code>forStmt</code></td> <td><code>&lt; for &gt; identifier &lt; in &gt; rangeBound &lt; .. &gt; rangeBound &lt; { &gt; codeBlockStmt* &lt; } &gt;</code></td> </tr> <tr> <td><code>rangeBound</code></td> <td><code>&lt; ( &gt; arithExpr &lt; ) &gt; \| fnCall \| num \| identifier</code></td> </tr> <tr> <td><code>implDef</code></td> <td><code>&lt; impl &gt; identifier &lt; { &gt; fnDef* &lt; } &gt;</code></td> </tr> <tr> <td><code>selfParam</code></td> <td><code>&lt; &amp; &gt; &lt; mut &gt; &lt; self &gt; \| &lt; &amp; &gt; &lt; self &gt;</code></td> </tr> <tr> <td><code>methodCall</code></td> <td><code>identifier exprSuffixNonMethod* &lt; . &gt; identifier &lt; ( &gt; rightValList? &lt; ) &gt;</code></td> </tr> <tr> <td><code>exprSuffixNonMethod</code></td> <td><code>&lt; [ &gt; indexExpr &lt; ] &gt; \| &lt; . &gt; identifier (不跟 &lt; ( &gt;)</code></td> </tr> </tbody> </table> <h3 id=_17>修改的现有规则</h3> <table> <thead> <tr> <th>规则</th> <th>变更</th> </tr> </thead> <tbody> <tr> <td><code>program</code></td> <td>新增 <code>implDef</code> 选项</td> </tr> <tr> <td><code>typeSpec</code></td> <td>新增 <code>arrayType</code> 和 <code>&lt; f32 &gt;</code> 选项</td> </tr> <tr> <td><code>paramDecl</code></td> <td>新增 <code>selfParam</code> 前缀选项（原为 <code>varDeclList</code>）</td> </tr> <tr> <td><code>arithTerm</code></td> <td><code>exprUnit</code> → <code>castExpr</code></td> </tr> <tr> <td><code>exprUnit</code></td> <td>新增 <code>floatLiteral</code> 和 <code>&lt; - &gt; floatLiteral</code> 选项</td> </tr> <tr> <td><code>fnCall</code></td> <td>新增 <code>methodCall</code> 选项</td> </tr> <tr> <td><code>codeBlockStmt</code></td> <td>新增 <code>forStmt</code> 选项</td> </tr> </tbody> </table> <h3 id=_18>新增关键字</h3> <p><code>impl</code>, <code>for</code>, <code>in</code>, <code>f32</code>, <code>as</code>, <code>self</code>, <code>Self</code>, <code>mut</code></p> <h2 id=_19>运算符优先级</h2> <p>实现全部特性后的优先级（从高到低）：</p> <ol> <li><strong>Primary</strong>：字面量、标识符、括号表达式、函数/方法调用</li> <li><strong>Suffix</strong>：数组索引 <code>[]</code>、成员访问 <code>.</code></li> <li><strong>Cast</strong>：<code>as</code></li> <li><strong>Multiplicative</strong>：<code>*</code>, <code>/</code></li> <li><strong>Additive</strong>：<code>+</code>, <code>-</code></li> <li><strong>Comparison</strong>：<code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code></li> <li><strong>Logical AND</strong>：<code>&amp;&amp;</code></li> <li><strong>Logical OR</strong>：<code>||</code></li> </ol> <blockquote> <p><strong>注意</strong>：由于 <code>boolComparison</code> 操作数为 <code>exprUnit</code>，比较运算符两侧的算术或 <code>as</code> 表达式须用括号包裹，如 <code>(a + b) &gt; c</code>、<code>(x as f32) &gt; 0.0</code>。</p> </blockquote> <h2 id=_20>完整示例</h2> <blockquote> <p>以下示例综合使用了全部特性（多维数组、<code>for</code> 循环、<code>impl</code> 块、<code>f32</code>、<code>as</code>）。三选一的同学请按需裁剪。</p> </blockquote> <pre><code class=language-rust>use std;
+
+struct Counter {
+    value:i32
+}
+
+impl Counter {
+    fn get(&amp;self) -&gt; i32 {
+        return self.value;
+    }
+
+    fn add(&amp;mut self, delta:i32) -&gt; i32 {
+        self.value = self.value + delta;
+        return self.value;
+    }
+}
+
+fn dot_product(a: &amp;[f32], b: &amp;[f32], n:i32) -&gt; f32 {
+    let sum:f32 = 0.0;
+    for i in 0..n {
+        let prod:f32 = a[i] * b[i];
+        sum = sum + prod;
+    }
+    return sum;
+}
+
+fn main() -&gt; i32 {
+    // 多维数组
+    let mat: [[i32; 3]; 2];
+    for i in 0..2 {
+        for j in 0..3 {
+            mat[i][j] = i * 3 + j;
+        }
+    }
+
+    // 浮点与类型转换
+    let x:i32 = 42;
+    let f:f32 = x as f32;
+    let half:f32 = f / 2.0;
+    let result:i32 = half as i32;
+    std::putint(result);
+    std::putch(10);
+
+    // 方法调用
+    let counters: [Counter; 1];
+    counters[0].value = 0;
+    counters[0].add(10);
+    std::putint(counters[0].get());
+    std::putch(10);
+
+    return 0;
+}
+</code></pre> <aside class=md-source-file> <span class=md-source-file__fact> <span class=md-icon title=最后更新> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg> </span> 2026-03-20 </span> </aside> <!-- Insert generated snippet here --> <script src=https://giscus.app/client.js data-repo=tea-compiler/tea-compiler.github.io data-repo-id=R_kgDOJ7xC6g data-category=General data-category-id=DIC_kwDOGP67ns4COM9Q data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light_protanopia data-lang=zh-CN data-loading=lazy crossorigin=anonymous async>
+</script> <!-- Synchronize Giscus theme with palette --> <script>
+var giscus = document.querySelector("script[src*=giscus]")
+
+// Set palette on initial load
+var palette = __md_get("__palette")
+if (palette && typeof palette.color === "object") {
+    var theme = palette.color.scheme === "slate"
+    ? "dark_protanopia"
+    : "light_protanopia"
+
+    // Instruct Giscus to set theme
+    giscus.setAttribute("data-theme", theme) 
+}
+
+// Register event handlers after documented loaded
+document.addEventListener("DOMContentLoaded", function() {
+    var ref = document.querySelector("[data-md-component=palette]")
+    ref.addEventListener("change", function() {
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+        var theme = palette.color.scheme === "slate"
+        ? "dark_protanopia"
+        : "light_protanopia"
+
+        // Instruct Giscus to change theme
+        var frame = document.querySelector(".giscus-frame")
+        frame.contentWindow.postMessage(
+        { giscus: { setConfig: { theme } } },
+        "https://giscus.app"
+        )
+    }
+    })
+})
+</script> </article> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg> 回到页面顶部 </button> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"annotate": null, "base": "../..", "features": ["header.autohide", "navigation.tracking", "navigation.top", "search.highlight", "search.share", "search.suggest", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script> <script src=../../assets/javascripts/bundle.79ae519e.min.js></script> <script src=../../js/open_in_new_tab.js></script> </body> </html>
