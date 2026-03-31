@@ -16,7 +16,7 @@
 | 2 | 词法分析 | [slides](slides/L2-词法分析.pdf)，[notes](notes/第2章-词法分析.pdf) | Rust 2 | [notes](notes/Rust介绍（下）.pdf) |
 | 3 | 上下文无关文法 | [slides](slides/L3-上下文无关文法.pdf)，[notes](notes/第3章-上下文无关文法.pdf) | 布置实验一 | |
 | 4 | 自顶向下解析 | [slides](slides/L4-自顶向下解析.pdf)，[notes](notes/第4章-自顶向下解析.pdf) | 答疑 | |
-| 5 | 自底向上解析 | <!--[slides](slides/L5-自底向上解析.pdf)--> | 答疑 | |
+| 5 | 自底向上解析 | [slides](slides/L5-自底向上解析.pdf)，[notes](notes/第5章-自底向上解析.pdf) | 答疑 | |
 | 6 | 课程小结与研讨 | | 验收实验一 | |
 | 7 | 类型推导 | <!--[slides](slides/L6-类型推导.pdf)--> | 布置实验二 | |
 | 8 | 线性IR | <!--[slides](slides/L7-线性IR.pdf)--> | 布置实验三 | |
