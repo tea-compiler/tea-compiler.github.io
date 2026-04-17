@@ -21,12 +21,7 @@
 
 ### 1.2 交付物与框架结构
 
-本次实验**只需要修改** `src/ir/gen/type_infer.rs`。其余与模块调度、签名登记相关的框架代码无需改动。我们需要在 `src/ir/gen/type_infer.rs` 内实现：
-
-- `PartialInference` 结构体的字段；
-- `collect_constraints` 函数体，作用是约束收集；
-- `finalize_partial` 函数体，作用是结果解析；
-- `TypeInference` 内部：walker 结构体、`VarState` / `TypeEnv`、`unify` 方法、所有 `process`_* 和 `type_of_`* 方法。
+本次实验**需要修改** `src/ir` 下与类型推断有关的内容，以通过上述测试用例。
 
 ### 1.3 运行测试
 
@@ -584,49 +579,6 @@ abs → max → min → clamp → clamp_positive
 ### 5.6 type_infer_5（负测试：冲突返回类型）
 
 `modular_inverse` 函数的程序员犯了一个错误：一个分支写了 `return;`（void），另一个分支写了 `return t;`（i32）。这两个约束通过约束求解器传播后必然冲突，编译器必须拒绝这段代码并给出错误信息。
-
-## 6. 实现建议
-
-### 6.1 推荐实现顺序
-
-由于框架已经替你处理了 Pass 2 / Pass 3 的编排，你只需关注 `type_infer.rs` 内部。建议分三个阶段，每个阶段都可以编译并通过部分测试：
-
-**阶段一：基础扶手**（目标：`type_infer_basic` 通过）
-
-框架给出了 `Ty`、`UnionFind`、`collect_constraints` / `finalize_partial` 的签名，但你还需要把推断引擎的主干搭起来。
-
-1. 设计 `VarState`、`TypeEnv` 等内部类型，存放 `Ty` 而非 `Dtype`
-2. 定义 `PartialInference` 的字段（函数名、env、return_ty）
-3. 设计 `TypeInference<'a>` walker 结构体（见 5.1）
-4. 实现 `unify` 方法（三分支模式匹配）
-5. 移植所有 `process`_* / `type_of_`* 方法，把 `Dtype` 换成 `Ty`，把 `check_compatible` 换成 `unify` 调用
-6. 在 `collect_constraints` 中组装 walker、遍历函数体、打包 `PartialInference`
-7. 在 `finalize_partial` 中解析每个 `Ty` 为 `Dtype`、校验返回类型
-
-完成后 `type_infer_basic`（所有函数都有显式返回类型）应该通过，因为你的推断器此时已经正确处理了具体类型。
-
-**阶段二：返回类型推断**（目标：`type_infer_1` ~ `type_infer_4` 通过）
-
-1. 处理 `return` 语句：将返回值类型与 `self.return_ty` 统一
-2. 处理函数调用：若被调函数在 `pending_returns` 中，返回对应的 `Ty::Var`
-3. 处理 `check_call_args`：把每个实参与对应形参类型统一
-
-完成后，线性函数链、自递归、引用参数 + 推断返回类型、多级函数链都能正确推断。
-
-**阶段三：完善边界情况**（目标：全部测试通过）
-
-1. 处理冲突返回类型（`type_infer_5`）：`unify` 的 bind 已经会返回 TypeMismatch，这一步通常自动通过
-2. 处理隐式 void 返回（在 `collect_constraints` 末尾调用 `block_may_fallthrough` 并对 `return_ty` 做 void 约束）
-
-### 6.2 常见陷阱
-
-**陷阱一：误以为需要自己创建 UnionFind。** 框架把求解器通过参数传给你；千万不要在 `collect_constraints` 里 `let mut uf = UnionFind::default()`，那会让全局共享的约束丢失。
-
-**陷阱二：在约束收集阶段就想解析类型变量。** 函数局部变量的类型可能依赖尚未分析的函数的返回类型——此时 `resolve_ty` 必然返回 `None`。在 `collect_constraints` 阶段，类型变量暂时未解析是**正常状态**；等 `finalize_partial` 再解析。
-
-**陷阱三：可变访问的传染。** `unify` 需要 `&mut self`，所有调用它的方法都要改签名。Rust 编译器会告诉你具体哪里——耐心修就行。
-
-**陷阱四：分支环境泄漏。** 处理 if/else 时要手动保存 `env` 的副本；如果忘了恢复，then 分支对 `env` 的修改会泄漏到 else 分支中。`self.uf` 由于是 `&mut` 引用，天然在分支间共享（这是你要的）。
 
 ## 7. 提交检查
 
