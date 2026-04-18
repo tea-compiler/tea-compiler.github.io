@@ -12,13 +12,13 @@
 
 | 周 | 课程内容 | 课件 | 实验内容 | 实验讲义 |
 |:--:|:--------:|:----:|:--------:|:----:|
-| 1 | 课程入门 | [slides](slides/L1-课程介绍.pdf), [notes](notes/第1章-课程介绍.pdf) | Rust 1 | [notes](notes/Rust介绍（上）.pdf) |
-| 2 | 词法分析 | [slides](slides/L2-词法分析.pdf)，[notes](notes/第2章-词法分析.pdf) | Rust 2 | [notes](notes/Rust介绍（下）.pdf) |
-| 3 | 上下文无关文法 | [slides](slides/L3-上下文无关文法.pdf)，[notes](notes/第3章-上下文无关文法.pdf) | 布置实验一 | |
+| 1 | 课程入门 | [slides](slides/L1-课程介绍.pdf), [notes](notes/第1章-课程介绍.pdf) | Rust 1 | [notes](project/rust-intro.md) |
+| 2 | 词法分析 | [slides](slides/L2-词法分析.pdf)，[notes](notes/第2章-词法分析.pdf) | Rust 2 | [notes](project/rust-intro-2.md) |
+| 3 | 上下文无关文法 | [slides](slides/L3-上下文无关文法.pdf)，[notes](notes/第3章-上下文无关文法.pdf) | 布置实验一 |[notes](project/asmt1.md)|
 | 4 | 自顶向下解析 | [slides](slides/L4-自顶向下解析.pdf)，[notes](notes/第4章-自顶向下解析.pdf) | 答疑 | |
 | 5 | 自底向上解析 | [slides](slides/L5-自底向上解析.pdf)，[notes](notes/第5章-自底向上解析.pdf) | 答疑 | |
 | 6 | 课程小结与研讨 | | 验收实验一 | |
-| 7 | 类型推导 | [slides](slides/L6-类型推导.pdf)，[notes](notes/第6章-类型推导.pdf) | 布置实验二 | |
+| 7 | 类型推导 | [slides](slides/L6-类型推导.pdf)，[notes](notes/第6章-类型推导.pdf) | 布置实验二 | [notes](project/asmt2.md) |
 | 8 | 线性IR | <!--[slides](slides/L7-线性IR.pdf)--> | 布置实验三 | |
 | 9 | 静态单赋值 | <!--[slides](slides/L8-静态单赋值.pdf)--> | 答疑 | |
 | 10 | 过程内优化 | <!--[slides](slides/L9-过程内优化.pdf)--> | 答疑 | |
