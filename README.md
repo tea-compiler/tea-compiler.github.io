@@ -19,7 +19,7 @@
 | 5 | 自底向上解析 | [slides](slides/L5-自底向上解析.pdf)，[notes](notes/第5章-自底向上解析.pdf) | 答疑 | |
 | 6 | 课程小结与研讨 | | 验收实验一 | |
 | 7 | 类型推导 | [slides](slides/L6-类型推导.pdf)，[notes](notes/第6章-类型推导.pdf) | 布置实验二 | [notes](project/asmt2.md) |
-| 8 | 线性IR | [slides](slides/L7-线性IR.pdf), [notes](notes/第7章-线性IR.pdf) | 布置实验三 | |
+| 8 | 线性IR | [slides](slides/L7-线性IR.pdf), [notes](notes/第7章-线性IR.pdf) | 布置实验三 | [notes](project/asmt3.md) |
 | 9 | 静态单赋值 | <!--[slides](slides/L8-静态单赋值.pdf)--> | 答疑 | |
 | 10 | 过程内优化 | <!--[slides](slides/L9-过程内优化.pdf)--> | 答疑 | |
 | 11 | 特邀讲座 | <!--[slides](slides/L10-过程间优化.pdf)--> | 验收实验二 | |
