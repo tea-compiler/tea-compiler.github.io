@@ -1,0 +1,332 @@
+<!doctype html><html lang=zh class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href=https://tea-compiler.github.io/project/asmt3/ rel=canonical><link rel=icon href=../../assets/images/favicon.png><meta name=generator content="mkdocs-1.6.1, mkdocs-material-9.7.4"><title>实验三：中间表示生成 - 编译原理 (复旦大学 2026年春季学期)</title><link rel=stylesheet href=../../assets/stylesheets/main.484c7ddc.min.css><link rel=stylesheet href=../../assets/stylesheets/palette.ab4e12ef.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Roboto Slab";--md-code-font:"Roboto Mono"}</style><script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=indigo> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#_1 class=md-skip> 跳转至 </a> </div> <div data-md-component=announce> </div> <header class="md-header md-header--shadow" data-md-component=header> <nav class="md-header__inner md-grid" aria-label=页眉> <a href=../.. title="编译原理 (复旦大学 2026年春季学期)" class="md-header__button md-logo" aria-label="编译原理 (复旦大学 2026年春季学期)" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> 编译原理 (复旦大学 2026年春季学期) </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> 实验三：中间表示生成 </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=indigo aria-label="Switch to dark mode" type=radio name=__palette id=__palette_0> <label class="md-header__button md-icon" title="Switch to dark mode" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg> </label> <input class=md-option data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme=slate data-md-color-primary=indigo data-md-color-accent=indigo aria-label="Switch to light mode" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Switch to light mode" for=__palette_0 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg> </label> </form> <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=搜索 placeholder=搜索 autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg> </label> <nav class=md-search__options aria-label=查找> <a href=javascript:void(0) class="md-search__icon md-icon" title=分享 aria-label=分享 data-clipboard data-clipboard-text data-md-component=search-share tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg> </a> <button type=reset class="md-search__icon md-icon" title=清空当前内容 aria-label=清空当前内容 tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> </button> </nav> <div class=md-search__suggest data-md-component=search-suggest></div> </form> <div class=md-search__output> <div class=md-search__scrollwrap tabindex=0 data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> 正在初始化搜索引擎 </div> <ol class=md-search-result__list role=presentation></ol> </div> </div> </div> </div> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary" aria-label=导航栏 data-md-level=0> <label class=md-nav__title for=__drawer> <a href=../.. title="编译原理 (复旦大学 2026年春季学期)" class="md-nav__button md-logo" aria-label="编译原理 (复旦大学 2026年春季学期)" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg> </a> 编译原理 (复旦大学 2026年春季学期) </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../.. class=md-nav__link> <span class=md-ellipsis> 课程信息 </span> </a> </li> <li class=md-nav__item> <a href=../rust-intro/ class=md-nav__link> <span class=md-ellipsis> Rust 介绍（上） </span> </a> </li> <li class=md-nav__item> <a href=../rust-intro-2/ class=md-nav__link> <span class=md-ellipsis> Rust 介绍（下） </span> </a> </li> <li class=md-nav__item> <a href=../overview/ class=md-nav__link> <span class=md-ellipsis> 实验总览 </span> </a> </li> <li class=md-nav__item> <a href=../asmt1/ class=md-nav__link> <span class=md-ellipsis> 实验一 解析抽象语法树 </span> </a> </li> <li class=md-nav__item> <a href=../asmt2/ class=md-nav__link> <span class=md-ellipsis> 实验二 类型推断 </span> </a> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label=目录> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> 目录 </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#1 class=md-nav__link> <span class=md-ellipsis> 1. 作业概述 </span> </a> <nav class=md-nav aria-label="1. 作业概述"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#11 class=md-nav__link> <span class=md-ellipsis> 1.1 分数构成 </span> </a> </li> <li class=md-nav__item> <a href=#12 class=md-nav__link> <span class=md-ellipsis> 1.2 特性与测试用例 </span> </a> </li> <li class=md-nav__item> <a href=#13 class=md-nav__link> <span class=md-ellipsis> 1.3 交付物 </span> </a> </li> <li class=md-nav__item> <a href=#14 class=md-nav__link> <span class=md-ellipsis> 1.4 运行测试 </span> </a> </li> <li class=md-nav__item> <a href=#15 class=md-nav__link> <span class=md-ellipsis> 1.5 测试原理 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#2-llvm-ir class=md-nav__link> <span class=md-ellipsis> 2. LLVM IR 简介 </span> </a> <nav class=md-nav aria-label="2. LLVM IR 简介"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#21-llvm class=md-nav__link> <span class=md-ellipsis> 2.1 LLVM 与中间表示 </span> </a> </li> <li class=md-nav__item> <a href=#22 class=md-nav__link> <span class=md-ellipsis> 2.2 模块结构 </span> </a> </li> <li class=md-nav__item> <a href=#23 class=md-nav__link> <span class=md-ellipsis> 2.3 函数与基本块 </span> </a> </li> <li class=md-nav__item> <a href=#24 class=md-nav__link> <span class=md-ellipsis> 2.4 类型系统 </span> </a> </li> <li class=md-nav__item> <a href=#25 class=md-nav__link> <span class=md-ellipsis> 2.5 指令集 </span> </a> </li> <li class=md-nav__item> <a href=#26-ssa class=md-nav__link> <span class=md-ellipsis> 2.6 SSA 与 φ 节点 </span> </a> </li> <li class=md-nav__item> <a href=#27-alloca-load-store class=md-nav__link> <span class=md-ellipsis> 2.7 内存模型：alloca / load / store </span> </a> </li> <li class=md-nav__item> <a href=#28 class=md-nav__link> <span class=md-ellipsis> 2.8 完整示例 </span> </a> </li> <li class=md-nav__item> <a href=#29-teac-ir-dtype class=md-nav__link> <span class=md-ellipsis> 2.9 teac 的 IR 类型（Dtype） </span> </a> </li> <li class=md-nav__item> <a href=#210-teac-operand class=md-nav__link> <span class=md-ellipsis> 2.10 teac 的操作数（Operand） </span> </a> </li> <li class=md-nav__item> <a href=#211-teac-stmt class=md-nav__link> <span class=md-ellipsis> 2.11 teac 的语句（Stmt） </span> </a> </li> <li class=md-nav__item> <a href=#212-ast-ir class=md-nav__link> <span class=md-ellipsis> 2.12 从 AST 到 IR 的流水线 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#3-f32as class=md-nav__link> <span class=md-ellipsis> 3. 浮点类型（f32）与类型转换（as）[必做] </span> </a> <nav class=md-nav aria-label="3. 浮点类型（f32）与类型转换（as）[必做]"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#31-ir class=md-nav__link> <span class=md-ellipsis> 3.1 新增 IR 构件 </span> </a> </li> <li class=md-nav__item> <a href=#32 class=md-nav__link> <span class=md-ellipsis> 3.2 涉及的改动 </span> </a> </li> <li class=md-nav__item> <a href=#33 class=md-nav__link> <span class=md-ellipsis> 3.3 示例 </span> </a> </li> <li class=md-nav__item> <a href=#34 class=md-nav__link> <span class=md-ellipsis> 3.4 测试 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#4-for-in class=md-nav__link> <span class=md-ellipsis> 4. For-In 循环 [三选一] </span> </a> <nav class=md-nav aria-label="4. For-In 循环 [三选一]"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#41-lowering class=md-nav__link> <span class=md-ellipsis> 4.1 Lowering 策略 </span> </a> </li> <li class=md-nav__item> <a href=#42-ssa class=md-nav__link> <span class=md-ellipsis> 4.2 φ 节点与 SSA </span> </a> </li> <li class=md-nav__item> <a href=#43 class=md-nav__link> <span class=md-ellipsis> 4.3 示例 </span> </a> </li> <li class=md-nav__item> <a href=#44 class=md-nav__link> <span class=md-ellipsis> 4.4 类型推断 </span> </a> </li> <li class=md-nav__item> <a href=#45 class=md-nav__link> <span class=md-ellipsis> 4.5 测试 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#5 class=md-nav__link> <span class=md-ellipsis> 5. 多维数组 [三选一] </span> </a> <nav class=md-nav aria-label="5. 多维数组 [三选一]"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#51-dtype class=md-nav__link> <span class=md-ellipsis> 5.1 嵌套的 Dtype </span> </a> </li> <li class=md-nav__item> <a href=#52-gep class=md-nav__link> <span class=md-ellipsis> 5.2 多级 GEP </span> </a> </li> <li class=md-nav__item> <a href=#53 class=md-nav__link> <span class=md-ellipsis> 5.3 为什么现有代码已经"几乎"支持多维数组 </span> </a> </li> <li class=md-nav__item> <a href=#54 class=md-nav__link> <span class=md-ellipsis> 5.4 示例 </span> </a> </li> <li class=md-nav__item> <a href=#55 class=md-nav__link> <span class=md-ellipsis> 5.5 测试 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#6-impl class=md-nav__link> <span class=md-ellipsis> 6. Impl 块与方法 [三选一] </span> </a> <nav class=md-nav aria-label="6. Impl 块与方法 [三选一]"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#61-name-mangling class=md-nav__link> <span class=md-ellipsis> 6.1 名称修饰（Name Mangling） </span> </a> </li> <li class=md-nav__item> <a href=#62-self class=md-nav__link> <span class=md-ellipsis> 6.2 self 参数的处理 </span> </a> </li> <li class=md-nav__item> <a href=#63-pass-2 class=md-nav__link> <span class=md-ellipsis> 6.3 模块级处理（Pass 2） </span> </a> </li> <li class=md-nav__item> <a href=#64 class=md-nav__link> <span class=md-ellipsis> 6.4 方法调用的解析 </span> </a> </li> <li class=md-nav__item> <a href=#65 class=md-nav__link> <span class=md-ellipsis> 6.5 示例 </span> </a> </li> <li class=md-nav__item> <a href=#66 class=md-nav__link> <span class=md-ellipsis> 6.6 测试 </span> </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <h1 id=_1>实验三：中间表示生成</h1> <h2 id=1>1. 作业概述</h2> <p>本次实验的目标是<strong>扩展 TeaLang 编译器的中间表示（IR）生成阶段</strong>，使编译器能够为新增的语法特性产生正确的 IR。我们将在已有的 AST → IR 生成流程基础上，在类型转换（<code>conversions.rs</code>）、类型推断（<code>type_infer.rs</code>）和函数体 IR 生成（<code>function_gen.rs</code>）中添加对浮点类型、<code>for</code> 循环、多维数组或方法调用的支持。</p> <h3 id=11>1.1 分数构成</h3> <table> <thead> <tr> <th>部分</th> <th>分值</th> <th>说明</th> </tr> </thead> <tbody> <tr> <td><strong>必做</strong></td> <td>30 分</td> <td>浮点类型 (<code>f32</code>) + 类型转换 (<code>as</code>) 的 IR 生成</td> </tr> <tr> <td><strong>三选一</strong></td> <td>60 分</td> <td><code>for</code> 循环、<code>impl</code> 块与方法、多维数组任选其一完整实现 IR 生成</td> </tr> <tr> <td><strong>Bonus</strong></td> <td>10 分</td> <td>开放任务：自行实现新语法特性的 IR 生成，或对 teac 做出有意义的改进（被合并进主分支）</td> </tr> </tbody> </table> <h3 id=12>1.2 特性与测试用例</h3> <table> <thead> <tr> <th>特性</th> <th>对应测试用例</th> <th>涉及改动</th> </tr> </thead> <tbody> <tr> <td><strong>浮点类型 (f32)</strong></td> <td><code>float_basic</code>, <code>float_arith</code>, <code>float_cmp</code>, <code>float_cast</code>, <code>float_func</code></td> <td><code>conversions.rs</code>, <code>type_infer.rs</code>, <code>function_gen.rs</code></td> </tr> <tr> <td><strong>类型转换 (as)</strong></td> <td><code>float_cast</code>, <code>float_arith</code>, <code>float_func</code></td> <td><code>type_infer.rs</code>, <code>function_gen.rs</code></td> </tr> <tr> <td><strong>For-In 循环</strong></td> <td><code>for_basic</code>, <code>for_continue</code>, <code>for_mixed</code>, <code>for_nested</code>, <code>for_range</code></td> <td><code>type_infer.rs</code>, <code>function_gen.rs</code></td> </tr> <tr> <td><strong>多维数组</strong></td> <td><code>array_2d_basic</code>, <code>array_2d_init</code>, <code>array_2d_matmul</code>, <code>array_3d</code>, <code>array_attention</code></td> <td><code>conversions.rs</code>, <code>type_infer.rs</code>, <code>function_gen.rs</code></td> </tr> <tr> <td><strong>Impl 块与方法</strong></td> <td><code>struct_method_basic</code>, <code>struct_method_calls</code>, <code>struct_method_loop</code>, <code>struct_method_namespace</code>, <code>struct_method_nested</code></td> <td><code>module_gen.rs</code>, <code>type_infer.rs</code>, <code>function_gen.rs</code></td> </tr> </tbody> </table> <p>共 20 个测试用例。每个对应 <code>tests/&lt;name&gt;/&lt;name&gt;.tea</code> 源程序和 <code>tests/&lt;name&gt;/&lt;name&gt;.ir</code> 期望输出。我们需要让 <code>teac --emit ir &lt;file&gt;</code> 对所选的特性涉及的所有测试文件都能成功输出 IR。</p> <blockquote> <p><strong>注意</strong>：浮点（f32）和类型转换（as）是<strong>必做</strong>的，因此所有同学的测试用例都包含 <code>float_</code>* 系列。三选一的特性再额外增加 5 个测试。</p> </blockquote> <h3 id=13>1.3 交付物</h3> <p>修改以下文件（允许新增文件）：</p> <ul> <li><code>src/ir/gen/conversions.rs</code> — AST 类型 → IR 类型的转换</li> <li><code>src/ir/gen/type_infer.rs</code> — 局部变量前向类型推断</li> <li><code>src/ir/gen/function_gen.rs</code> — 函数体 IR 生成</li> <li><code>src/ir/gen/module_gen.rs</code> — 模块级 IR 生成（<code>impl</code> 块相关）</li> <li><code>src/ir/stmt.rs</code> — IR 语句定义（如需扩展）</li> </ul> <h3 id=14>1.4 运行测试</h3> <pre><code class=language-bash># 运行全部 teac 主线端到端测试（不包括新增特性的测试）
+cargo test
+
+# 运行浮点测试（必做）—— 默认同时检查 AST 解析和 IR 生成
+cargo test --features float
+
+# 运行 for 循环测试（三选一）
+cargo test --features for-loop
+
+# 运行多维数组测试（三选一）
+cargo test --features multi-dim-array
+
+# 运行 impl 方法测试（三选一）
+cargo test --features struct-method
+
+# 运行某一个具体的测试
+cargo test --features float float_cast
+
+# 只运行 AST 解析检查（跳过 IR 生成，用于实验二阶段）
+cargo test --features float,ast-only
+
+# 查看编译器对某个文件的 IR 输出
+cargo run -- tests/float_basic/float_basic.tea --emit ir
+</code></pre> <h3 id=15>1.5 测试原理</h3> <p>每个测试用例依次执行两阶段检查：</p> <p><strong>阶段 1：AST 解析</strong>（<code>test_ast_parse</code>）</p> <ol> <li><code>teac --emit ast &lt;file&gt;</code> 退出码为 0</li> <li>stderr 为空</li> <li>AST 输出非空且包含预期的标识符</li> </ol> <p><strong>阶段 2：IR 执行</strong>（<code>test_ir</code>）</p> <ol> <li><code>teac --emit ir &lt;file&gt;</code> 生成 LLVM IR（<code>.ll</code> 文件）</li> <li><code>clang</code> 将生成的 <code>.ll</code> 与运行时（<code>tests/std/std.c</code>）编译链接为可执行文件</li> <li>运行可执行文件，捕获 stdout 和退出码</li> <li>与 <code>.out</code> 逐行比对（与端到端测试相同的正确性标准）</li> </ol> <p>添加 <code>--features ast-only</code> 可以跳过 IR 执行检查，仅验证 AST 解析（用于实验一阶段，IR 尚未实现时）。</p> <h2 id=2-llvm-ir>2. LLVM IR 简介</h2> <h3 id=21-llvm>2.1 LLVM 与中间表示</h3> <p><a href=https://llvm.org/ >LLVM</a> 是一套模块化的编译器基础设施，其核心设计理念是将编译过程分为<strong>前端</strong>（源语言 → IR）和<strong>后端</strong>（IR → 目标机器码）两个独立阶段，中间通过一种统一的<strong>中间表示（Intermediate Representation, IR）</strong>衔接。</p> <pre><code>源代码  ──前端──▶  LLVM IR  ──后端──▶  机器码
+(.tea)            (.ll)              (aarch64/x86)
+</code></pre> <p>LLVM IR 是一种<strong>强类型</strong>、<strong>低级别</strong>的虚拟指令集，具有以下特征：</p> <ul> <li><strong>三地址码（three-address code）</strong>：每条指令最多一个目标寄存器和两个操作数，形如 <code>%r2 = add i32 %r0, %r1</code></li> <li><strong>静态单赋值（SSA）形式</strong>：每个虚拟寄存器（<code>%r0</code>, <code>%r1</code>, ...）只被赋值一次</li> <li><strong>显式类型标注</strong>：每个值都携带类型信息，如 <code>i32</code>、<code>float</code>、<code>ptr</code></li> <li><strong>平台无关</strong>：同一份 <code>.ll</code> 文件可以被 LLVM 后端编译到 x86、AArch64、RISC-V 等多种目标架构</li> </ul> <p>本实验的目标是让 teac 编译器输出合法的 LLVM IR（<code>.ll</code> 文件）。验证时，测试框架调用 <code>clang</code> 将生成的 <code>.ll</code> 与 C 运行时（提供 <code>putint</code> 等 I/O 函数的 <code>std.c</code>）一起编译链接为原生可执行文件，然后运行并比对输出。</p> <h3 id=22>2.2 模块结构</h3> <p>一个 <code>.ll</code> 文件对应一个 LLVM <strong>模块（Module）</strong>，模块由以下顶层实体组成：</p> <pre><code class=language-llvm>; 1. 结构体类型定义
+%Counter = type { i32 }
+
+; 2. 全局变量
+@g = dso_local global i32 0, align 4
+
+; 3. 外部函数声明（类似 C 的 extern）
+declare void @putint(i32)
+
+; 4. 函数定义
+define dso_local i32 @main() {
+    ; 函数体 ...
+}
+</code></pre> <ul> <li><strong>类型定义</strong>以 <code>%</code> 开头（如 <code>%Counter</code>），定义命名结构体</li> <li><strong>全局变量</strong>以 <code>@</code> 开头（如 <code>@g</code>），在整个模块可见</li> <li><strong>函数声明</strong>（<code>declare</code>）引入外部符号，不含函数体</li> <li><strong>函数定义</strong>（<code>define</code>）包含完整的函数体</li> </ul> <h3 id=23>2.3 函数与基本块</h3> <p>一个函数由若干<strong>基本块（Basic Block）</strong>组成。每个基本块是一段顺序执行的指令序列，以<strong>标签（label）</strong>开头、以<strong>终结指令（terminator）</strong>结尾：</p> <pre><code class=language-llvm>define i32 @abs(i32 %r0) {
+abs:                                    ; 入口基本块，标签与函数名相同
+    %r1 = icmp slt i32 %r0, 0          ; 比较 %r0 &lt; 0
+    br i1 %r1, label %bb1, label %bb2  ; 终结指令：条件跳转
+bb1:                                    ; 基本块 bb1
+    %r2 = sub i32 0, %r0               ; 取相反数
+    br label %bb3                       ; 终结指令：无条件跳转
+bb2:                                    ; 基本块 bb2
+    br label %bb3
+bb3:                                    ; 基本块 bb3
+    %r3 = phi i32 [ %r2, %bb1 ], [ %r0, %bb2 ]
+    ret i32 %r3                         ; 终结指令：返回
+}
+</code></pre> <p>基本块内部没有跳转——执行从第一条指令直线到达终结指令。控制流只发生在基本块之间。</p> <p>LLVM IR 的终结指令有三种：</p> <table> <thead> <tr> <th>终结指令</th> <th>语法</th> <th>含义</th> </tr> </thead> <tbody> <tr> <td><code>ret</code></td> <td><code>ret i32 %r3</code> 或 <code>ret void</code></td> <td>函数返回</td> </tr> <tr> <td><code>br</code>（条件）</td> <td><code>br i1 %cond, label %T, label %F</code></td> <td>根据条件跳转到两个目标之一</td> </tr> <tr> <td><code>br</code>（无条件）</td> <td><code>br label %target</code></td> <td>无条件跳转</td> </tr> </tbody> </table> <h3 id=24>2.4 类型系统</h3> <p>LLVM IR 是强类型的——每条指令的操作数和结果都有明确的类型。teac 涉及的类型包括：</p> <table> <thead> <tr> <th>LLVM IR 类型</th> <th>含义</th> <th>示例</th> </tr> </thead> <tbody> <tr> <td><code>void</code></td> <td>无返回值</td> <td><code>ret void</code></td> </tr> <tr> <td><code>i1</code></td> <td>1 位整数（布尔）</td> <td><code>icmp</code> 的结果类型</td> </tr> <tr> <td><code>i32</code></td> <td>32 位有符号整数</td> <td><code>add i32 %r0, 1</code></td> </tr> <tr> <td><code>float</code></td> <td>32 位 IEEE 754 浮点数</td> <td><code>fadd float %r0, %r1</code></td> </tr> <tr> <td><code>ptr</code></td> <td>不透明指针（LLVM 15+）</td> <td><code>load i32, ptr %r0</code></td> </tr> <tr> <td><code>[N x T]</code></td> <td>包含 N 个 T 类型元素的数组</td> <td><code>[4 x i32]</code>、<code>[3 x [4 x i32]]</code></td> </tr> <tr> <td><code>%Name</code></td> <td>命名结构体</td> <td><code>%Counter</code>（引用 <code>type</code> 定义）</td> </tr> </tbody> </table> <p>注意：LLVM 15 以后采用<strong>不透明指针（opaque pointer）</strong>，所有指针统一为 <code>ptr</code> 类型，不再区分 <code>i32*</code>、<code>float*</code> 等。teac 生成的 IR 使用这种新式指针。</p> <p><strong>浮点常量</strong>在 LLVM IR 中以 IEEE 754 双精度十六进制格式表示。例如 <code>3.14</code> 表示为 <code>0x40091EB860000000</code>，<code>1.0</code> 表示为 <code>0x3FF0000000000000</code>。即使操作类型是 <code>float</code>（单精度），常量仍以双精度十六进制写入，LLVM 在编译时自动截断。</p> <h3 id=25>2.5 指令集</h3> <p>LLVM IR 的指令可以分为以下几类。下面列出 teac 需要生成的指令：</p> <p><strong>算术运算</strong></p> <p>整数和浮点使用<strong>不同的指令助记符</strong>：</p> <pre><code class=language-llvm>%r2 = add  i32   %r0, %r1     ; 整数加法
+%r2 = sub  i32   %r0, %r1     ; 整数减法
+%r2 = mul  i32   %r0, %r1     ; 整数乘法
+%r2 = sdiv i32   %r0, %r1     ; 有符号整数除法
+
+%r2 = fadd float %r0, %r1     ; 浮点加法
+%r2 = fsub float %r0, %r1     ; 浮点减法
+%r2 = fmul float %r0, %r1     ; 浮点乘法
+%r2 = fdiv float %r0, %r1     ; 浮点除法
+</code></pre> <p><strong>比较</strong></p> <p>整数使用 <code>icmp</code>，浮点使用 <code>fcmp</code>，结果类型均为 <code>i1</code>：</p> <pre><code class=language-llvm>%r2 = icmp eq  i32   %r0, %r1   ; 整数相等
+%r2 = icmp slt i32   %r0, %r1   ; 有符号小于
+
+%r2 = fcmp oeq float %r0, %r1   ; 浮点有序相等（ordered equal）
+%r2 = fcmp ogt float %r0, %r1   ; 浮点有序大于
+</code></pre> <p>浮点比较的 <code>o</code> 前缀表示 *<em>ordered</em>。如果任一操作数是 NaN，结果为 <code>false</code>。这是最常用的浮点比较语义。</p> <p><strong>内存操作</strong></p> <pre><code class=language-llvm>%r0 = alloca i32, align 4              ; 在栈上分配一个 i32 的空间，返回 ptr
+store i32 42, ptr %r0, align 4         ; 将值 42 写入 %r0 指向的地址
+%r1 = load i32, ptr %r0, align 4       ; 从 %r0 指向的地址读取一个 i32
+</code></pre> <p><code>getelementptr</code>（GEP）是 LLVM IR 中最复杂的指令，用于计算复合类型（数组、结构体）内元素的地址，<strong>不访问内存</strong>：</p> <pre><code class=language-llvm>; 计算数组 arr[2] 的地址：从 [10 x i32]* 得到 i32*
+%r1 = getelementptr [10 x i32], ptr %r0, i32 0, i32 2
+
+; 计算结构体第 0 个字段的地址
+%r1 = getelementptr %Counter, ptr %r0, i32 0, i32 0
+</code></pre> <p>GEP 的第一个索引 <code>i32 0</code> 是对指针本身的"解引用"（因为 <code>%r0</code> 的语义是"指向 <code>[10 x i32]</code> 的指针"），第二个索引才是数组/结构体内部的下标。</p> <p><strong>类型转换</strong></p> <pre><code class=language-llvm>%r1 = sitofp i32   %r0 to float   ; 有符号整数 → 浮点
+%r1 = fptosi float %r0 to i32     ; 浮点 → 有符号整数（截断）
+</code></pre> <p><strong>其他</strong></p> <pre><code class=language-llvm>call void @putint(i32 %r0)              ; 无返回值的函数调用
+%r1 = call i32 @compute(i32 %r0)        ; 有返回值的函数调用
+%r3 = phi i32 [ %r1, %bb1 ], [ %r2, %bb2 ]  ; φ 节点（见下节）
+</code></pre> <h3 id=26-ssa>2.6 SSA 与 φ 节点</h3> <p>LLVM IR 采用 <strong>静态单赋值（Static Single Assignment, SSA）</strong>形式：每个虚拟寄存器（<code>%r0</code>, <code>%r1</code>, ...）在整个函数中<strong>只被定义一次</strong>。这个约束使得数据流分析和优化变得简单，但也带来一个问题——当同一个变量在不同控制流路径上被赋予不同的值时，如何在合流点确定使用哪个值？</p> <p>答案是 <strong>φ（phi）节点</strong>。φ 节点放在基本块的开头，根据控制流的来源选择对应的值：</p> <pre><code class=language-llvm>; if (x &gt; 0) result = 1; else result = 0;
+main:
+    %r0 = icmp sgt i32 %x, 0
+    br i1 %r0, label %bb1, label %bb2
+bb1:
+    br label %bb3
+bb2:
+    br label %bb3
+bb3:
+    %result = phi i32 [ 1, %bb1 ], [ 0, %bb2 ]
+</code></pre> <p><code>phi i32 [ 1, %bb1 ], [ 0, %bb2 ]</code> 的含义：如果控制流从 <code>%bb1</code> 到达，取值 <code>1</code>；如果从 <code>%bb2</code> 到达，取值 <code>0</code>。</p> <p>φ 节点在循环中尤其重要。以一个求和循环为例：</p> <pre><code class=language-llvm>; sum = 0; i = 0; while (i &lt; 10) { sum += i; i++; }
+entry:
+    br label %loop
+loop:
+    %i   = phi i32 [ 0, %entry ], [ %i_next,   %loop ]
+    %sum = phi i32 [ 0, %entry ], [ %sum_next,  %loop ]
+    %sum_next = add i32 %sum, %i
+    %i_next   = add i32 %i, 1
+    %cond = icmp slt i32 %i_next, 10
+    br i1 %cond, label %loop, label %exit
+exit:
+    ret i32 %sum_next
+</code></pre> <p>循环变量 <code>%i</code> 和累加器 <code>%sum</code> 都通过 φ 节点在循环头部合并——第一次进入时取初始值（来自 <code>%entry</code>），后续迭代取上一轮的更新值（来自 <code>%loop</code> 自身）。</p> <h3 id=27-alloca-load-store>2.7 内存模型：alloca / load / store</h3> <p>尽管 LLVM IR 是 SSA 形式，但源语言中的<strong>可变局部变量</strong>天然违反"只赋值一次"的约束。LLVM 用 <code>alloca</code> / <code>load</code> / <code>store</code> 三件套解决这个问题：</p> <ol> <li><strong><code>alloca</code></strong>：在栈上分配空间，返回一个指针</li> <li><strong><code>store</code></strong>：将值写入指针指向的位置（可执行多次——修改的是内存，不是寄存器）</li> <li><strong><code>load</code></strong>：从内存中读取值到一个新的 SSA 寄存器</li> </ol> <p>例如，源代码 <code>let mut x: i32 = 1; x = x + 1;</code> 的 IR：</p> <pre><code class=language-llvm>%r0 = alloca i32, align 4         ; 为 x 分配栈空间
+store i32 1, ptr %r0, align 4     ; x = 1
+%r1 = load i32, ptr %r0, align 4  ; 读取 x 的当前值
+%r2 = add i32 %r1, 1              ; x + 1
+store i32 %r2, ptr %r0, align 4   ; x = x + 1（写回同一地址）
+</code></pre> <p>每次修改变量都生成一对 load + store，而不是直接修改寄存器。这样 <code>%r0</code>（指针）只被赋值一次，满足 SSA 约束。LLVM 后端的 <code>mem2reg</code> 优化 pass 会将这种模式提升为直接使用寄存器和 φ 节点，消除不必要的内存访问。</p> <blockquote> <p>teac 的 IR 生成采用了混合策略：简单的临时值（如表达式求值的中间结果）直接使用 SSA 寄存器；而需要取地址或被多次赋值的变量使用 alloca/load/store 模式。循环中被修改的变量在 mem2reg 优化后会转换为 φ 节点形式。</p> </blockquote> <h3 id=28>2.8 完整示例</h3> <p>以下是一个完整的 <code>.ll</code> 文件，展示了上述所有概念的综合运用：</p> <pre><code class=language-llvm>declare void @putint(i32)
+
+define dso_local i32 @main() {
+main:
+    %r0 = alloca i32, align 4
+    store i32 10, ptr %r0, align 4
+    %r1 = load i32, ptr %r0, align 4
+    %r2 = icmp sgt i32 %r1, 5
+    br i1 %r2, label %bb1, label %bb2
+bb1:
+    call void @putint(i32 %r1)
+    br label %bb3
+bb2:
+    call void @putint(i32 0)
+    br label %bb3
+bb3:
+    ret i32 0
+}
+</code></pre> <p>这个程序：分配一个局部变量并赋值 10，比较是否大于 5，根据结果打印不同的值，最后返回 0。可以直接用 <code>clang test.ll -o test &amp;&amp; ./test</code> 编译运行（前提是提供 <code>putint</code> 的实现）。</p> <h3 id=29-teac-ir-dtype>2.9 teac 的 IR 类型（Dtype）</h3> <p><code>Dtype</code> 是 teac 中对 LLVM IR 类型的建模，定义在 <code>src/ir/types.rs</code>：</p> <pre><code class=language-rust>enum Dtype {
+    Void,                              // void
+    I1,                                // i1
+    I32,                               // i32
+    F32,                               // float
+    Struct { type_name: String },      // %Name
+    Pointer { pointee: Box&lt;Dtype&gt; },   // ptr
+    Array { element: Box&lt;Dtype&gt;, length: Option&lt;usize&gt; },  // [N x T]
+}
+</code></pre> <p><code>Dtype</code> 打印为 LLVM IR 风格的文本：<code>I32</code> → <code>i32</code>，<code>F32</code> → <code>float</code>，<code>Array { I32, 4 }</code> → <code>[4 x i32]</code>，<code>Pointer</code> → <code>ptr</code>。</p> <h3 id=210-teac-operand>2.10 teac 的操作数（Operand）</h3> <p><code>Operand</code> 表示一条 IR 指令的操作数，定义在 <code>src/ir/value.rs</code>：</p> <pre><code class=language-rust>enum Operand {
+    Const(IntConst),         // 整数常量，如 42
+    FloatConst(FloatConst),  // 浮点常量，如 0x40091EB860000000
+    Local(Local),            // SSA 局部值，如 %r3
+    Global(GlobalRef),       // 全局变量引用，如 @c
+}
+</code></pre> <p><code>FloatConst</code> 内部以 <code>f64</code> 存储值，打印时输出 IEEE 754 双精度十六进制表示（<code>0x{:016X}</code>），这是 LLVM IR 的标准浮点常量格式（参见 2.4 节）。</p> <h3 id=211-teac-stmt>2.11 teac 的语句（Stmt）</h3> <p>每条 IR 指令是一个 <code>Stmt</code>，其核心是 <code>StmtInner</code> 枚举。每个变体对应 2.5 节介绍的一条 LLVM IR 指令：</p> <pre><code class=language-rust>enum StmtInner {
+    Call(..),      // call void @putint(i32 1)
+    Load(..),      // %r3 = load float, ptr %r0, align 4
+    Phi(..),       // %r33 = phi i32 [ 0, %main ], [ %r8, %bb3 ]
+    BiOp(..),      // %r6 = add i32 %r34, %r33
+    FBiOp(..),     // %r5 = fdiv float %r4, 0x4000000000000000
+    Alloca(..),    // %r0 = alloca float, align 4
+    Cmp(..),       // %r3 = icmp slt i32 %r33, 10
+    FCmp(..),      // %r5 = fcmp ogt float %r3, %r4
+    CJump(..),     // br i1 %r3, label %bb2, label %bb4
+    Label(..),     // bb1:
+    Store(..),     // store float 0x40091EB860000000, ptr %r0, align 4
+    Jump(..),      // br label %bb1
+    Gep(..),       // %r7 = getelementptr [3 x [4 x i32]], ptr %r0, i32 0, i32 %r37
+    Return(..),    // ret i32 0
+    SIToFP(..),    // %r2 = sitofp i32 42 to float
+    FPToSI(..),    // %r8 = fptosi float %r7 to i32
+}
+</code></pre> <h3 id=212-ast-ir>2.12 从 AST 到 IR 的流水线</h3> <p><code>module_gen.rs</code> 中的 <code>IrGenerator::generate()</code> 分三遍扫描驱动整个降低过程：</p> <table> <thead> <tr> <th>Pass</th> <th>职责</th> <th>关键代码</th> </tr> </thead> <tbody> <tr> <td>Pass 1</td> <td>处理 <code>use</code> 语句，注册外部符号</td> <td><code>handle_use_stmt</code></td> </tr> <tr> <td>Pass 2</td> <td>注册全局变量、函数签名、结构体定义</td> <td><code>handle_fn_def</code> 等</td> </tr> <tr> <td>Pass 3</td> <td>对每个函数做类型推断 + IR 生成</td> <td><code>type_infer::infer_function</code> → <code>FunctionGenerator::generate</code></td> </tr> </tbody> </table> <p>Pass 3 是本实验的核心。对每个函数定义，编译器先调用 <code>type_infer::infer_function</code> 做前向局部类型推断，得到 <code>HashMap&lt;String, Dtype&gt;</code>（每个局部变量的具体类型），然后传入 <code>FunctionGenerator</code> 逐条语句生成 IR。</p> <h2 id=3-f32as>3. 浮点类型（f32）与类型转换（as）[必做]</h2> <h3 id=31-ir>3.1 新增 IR 构件</h3> <p>本次实验中，浮点支持涉及以下 IR 层面的新构件：</p> <table> <thead> <tr> <th>构件</th> <th>定义位置</th> <th>说明</th> </tr> </thead> <tbody> <tr> <td><code>Dtype::F32</code></td> <td><code>types.rs</code></td> <td>浮点类型，打印为 <code>float</code></td> </tr> <tr> <td><code>FloatConst</code></td> <td><code>value.rs</code></td> <td>浮点常量操作数，存储 <code>f64</code> 值</td> </tr> <tr> <td><code>FloatBinOp</code></td> <td><code>stmt.rs</code></td> <td>浮点二元运算符：<code>FAdd</code>, <code>FSub</code>, <code>FMul</code>, <code>FDiv</code></td> </tr> <tr> <td><code>FCmpPredicate</code></td> <td><code>stmt.rs</code></td> <td>浮点比较谓词：<code>OEq</code>, <code>ONe</code>, <code>OGt</code>, <code>OGe</code>, <code>OLt</code>, <code>OLe</code></td> </tr> <tr> <td><code>FBiOpStmt</code></td> <td><code>stmt.rs</code></td> <td>浮点二元运算指令</td> </tr> <tr> <td><code>FCmpStmt</code></td> <td><code>stmt.rs</code></td> <td>浮点比较指令</td> </tr> <tr> <td><code>SIToFPStmt</code></td> <td><code>stmt.rs</code></td> <td><code>i32</code> → <code>float</code> 转换指令</td> </tr> <tr> <td><code>FPToSIStmt</code></td> <td><code>stmt.rs</code></td> <td><code>float</code> → <code>i32</code> 转换指令</td> </tr> </tbody> </table> <p>这些类型和语句结构已经在 IR 层定义好了。本实验需要在 IR <strong>生成</strong>阶段正确地产生这些指令。</p> <h3 id=32>3.2 涉及的改动</h3> <p><code>conversions.rs</code>：AST 类型到 IR 类型的转换。需要确保 <code>ast::BuiltIn::Float</code> 被正确映射到 <code>Dtype::F32</code>，以及浮点数组类型能被正确处理。</p> <p><code>type_infer.rs</code>：前向类型推断器。需要识别 <code>f32</code> 类型的变量声明和定义，支持 <code>as</code> 表达式的类型推断（<code>x as f32</code> 的结果类型是 <code>f32</code>，<code>y as i32</code> 的结果类型是 <code>i32</code>）。</p> <p><code>function_gen.rs</code>：函数体 IR 生成。这是改动量最大的文件，需要处理：</p> <ol> <li><strong>浮点字面量</strong>：将 AST 中的浮点字面量转为 <code>Operand::FloatConst</code></li> <li><strong>浮点运算</strong>：当操作数是 <code>f32</code> 时，生成 <code>FBiOp</code>（<code>fadd</code>/<code>fsub</code>/<code>fmul</code>/<code>fdiv</code>）而非 <code>BiOp</code>（<code>add</code>/<code>sub</code>/<code>mul</code>/<code>sdiv</code>）</li> <li><strong>浮点比较</strong>：当操作数是 <code>f32</code> 时，生成 <code>FCmp</code>（<code>fcmp oeq</code>/<code>one</code>/...）而非 <code>Cmp</code>（<code>icmp eq</code>/<code>ne</code>/...）</li> <li><strong>类型转换</strong>：<code>as</code> 表达式生成 <code>SIToFP</code> 或 <code>FPToSI</code> 指令</li> </ol> <h3 id=33>3.3 示例</h3> <p>源程序：</p> <pre><code class=language-rust>let x: f32 = 3.14;
+let y: f32 = x + 1.0;
+let n: i32 = y as i32;
+</code></pre> <p>生成的 IR：</p> <pre><code class=language-llvm>%r0 = alloca float, align 4
+store float 0x40091EB860000000, ptr %r0, align 4
+%r1 = load float, ptr %r0, align 4
+%r2 = fadd float %r1, 0x3FF0000000000000
+%r3 = alloca float, align 4
+store float %r2, ptr %r3, align 4
+%r4 = load float, ptr %r3, align 4
+%r5 = fptosi float %r4 to i32
+</code></pre> <p>关键点：</p> <ul> <li>浮点常量 <code>3.14</code> 转为 IEEE 754 双精度十六进制 <code>0x40091EB860000000</code></li> <li>加法使用 <code>fadd</code> 而非 <code>add</code></li> <li><code>as i32</code> 转为 <code>fptosi float %r4 to i32</code></li> </ul> <p>再看反向转换（<code>i32</code> → <code>f32</code>）：</p> <pre><code class=language-rust>let x: i32 = 42;
+let f: f32 = x as f32;
+</code></pre> <pre><code class=language-llvm>%r2 = sitofp i32 42 to float
+%r3 = alloca float, align 4
+store float %r2, ptr %r3, align 4
+</code></pre> <h3 id=34>3.4 测试</h3> <pre><code class=language-bash>cargo test --features float
+</code></pre> <p>每个测试生成 IR 后编译运行，与 <code>.out</code> 文件比对输出。</p> <h2 id=4-for-in>4. For-In 循环 [三选一]</h2> <h3 id=41-lowering>4.1 Lowering 策略</h3> <p><code>for i in start..end { body }</code> 需要被降低为一个包含四个基本块的循环结构：</p> <ol> <li><strong>前序块</strong>：计算 <code>start</code> 和 <code>end</code> 的值，跳转到测试块</li> <li><strong>测试块（bb_test）</strong>：用 φ 节点合并循环变量的初始值和每次迭代后的更新值，比较 <code>i &lt; end</code>，条件跳转到循环体或出口</li> <li><strong>循环体（bb_body）</strong>：执行循环体语句</li> <li><strong>递增块（bb_incr）</strong>：<code>i = i + 1</code>，跳回测试块</li> <li><strong>出口块（bb_exit）</strong>：循环结束后继续执行</li> </ol> <p>控制流图：</p> <pre><code class=language-mermaid>graph TD
+    A[前序块] --&gt;|br| B[bb_test]
+    B --&gt;|i &lt; end| C[bb_body]
+    B --&gt;|i &gt;= end| E[bb_exit]
+    C --&gt; D[bb_incr]
+    D --&gt;|br| B
+</code></pre> <p><code>break</code> 跳转到 <code>bb_exit</code>，<code>continue</code> 跳转到 <code>bb_incr</code>（先递增再回到测试，这与 while 的 <code>continue</code> 语义不同）。</p> <h3 id=42-ssa>4.2 φ 节点与 SSA</h3> <p>for 循环中，循环变量 <code>i</code> 和循环体内修改的变量都需要通过 φ 节点在测试块入口处合并来自前序块和递增块的值。例如对于 <code>for i in 0..10 { sum = sum + i; }</code>，测试块开头需要两个 φ 节点：</p> <pre><code class=language-llvm>bb1:
+    %r33 = phi i32 [ 0, %main ], [ %r8, %bb3 ]   ; i: 来自前序的0 或 递增后的值
+    %r34 = phi i32 [ 0, %main ], [ %r6, %bb3 ]   ; sum: 来自前序的0 或 循环体更新后的值
+    %r3 = icmp slt i32 %r33, 10
+    br i1 %r3, label %bb2, label %bb4
+</code></pre> <p>这与 while 循环的降低策略本质相同，teac 的 IR 是 SSA 形式，循环中被修改的变量必须经过 φ 节点合流。</p> <h3 id=43>4.3 示例</h3> <p>源程序：</p> <pre><code class=language-rust>let sum: i32 = 0;
+for i in 0..10 {
+    sum = sum + i;
+}
+std::putint(sum);
+</code></pre> <p>生成的 IR（经 mem2reg 优化后）：</p> <pre><code class=language-llvm>main:
+    br label %bb1
+bb1:
+    %r33 = phi i32 [ 0, %main ], [ %r8, %bb3 ]
+    %r34 = phi i32 [ 0, %main ], [ %r6, %bb3 ]
+    %r3 = icmp slt i32 %r33, 10
+    br i1 %r3, label %bb2, label %bb4
+bb2:
+    %r6 = add i32 %r34, %r33
+    br label %bb3
+bb3:
+    %r8 = add i32 %r33, 1
+    br label %bb1
+bb4:
+    call void @putint(i32 %r34)
+</code></pre> <p>关键点：</p> <ul> <li><code>bb1</code> 是测试块，<code>%r33</code> 是循环变量 <code>i</code> 的 φ 节点</li> <li><code>bb2</code> 是循环体，执行 <code>sum = sum + i</code></li> <li><code>bb3</code> 是递增块，<code>i = i + 1</code></li> <li><code>bb4</code> 是出口块</li> </ul> <h3 id=44>4.4 类型推断</h3> <p><code>for i in start..end</code> 中，循环变量 <code>i</code> 的类型由 <code>start</code> 和 <code>end</code> 表达式决定（在 teac 中固定为 <code>i32</code>）。类型推断器需要在处理 for 语句时：</p> <ol> <li>将 <code>i</code> 以 <code>Resolved(I32)</code> 注册到类型环境中</li> <li>推断循环体内的变量类型</li> <li>与 while 循环类似，将循环体的环境合并回循环前的环境</li> </ol> <h3 id=45>4.5 测试</h3> <pre><code class=language-bash>cargo test --features for-loop
+</code></pre> <p>每个测试生成 IR 后编译运行，与 <code>.out</code> 文件比对输出。</p> <h2 id=5>5. 多维数组 [三选一]</h2> <h3 id=51-dtype>5.1 嵌套的 Dtype</h3> <p>多维数组在 IR 层是<strong>嵌套的 <code>Dtype::Array</code></strong>。例如 <code>[[i32; 4]; 3]</code> 对应：</p> <pre><code class=language-rust>Dtype::Array {
+    element: Box::new(Dtype::Array {
+        element: Box::new(Dtype::I32),
+        length: Some(4),
+    }),
+    length: Some(3),
+}
+</code></pre> <p>打印为 <code>[3 x [4 x i32]]</code>。这与 LLVM IR 的多维数组表示一致。</p> <h3 id=52-gep>5.2 多级 GEP</h3> <p>访问多维数组元素需要多级 <code>getelementptr</code>（GEP）指令链。每一级 GEP 将指针从外层数组"索引进"一层，得到内层数组的指针，再用下一级 GEP 继续索引。</p> <p>例如 <code>mat[i][j]</code>（<code>mat: [[i32; 4]; 3]</code>）的降低：</p> <pre><code class=language-llvm>; 第一级 GEP: 从 [3 x [4 x i32]]* 索引到 [4 x i32]*
+%r7 = getelementptr [3 x [4 x i32]], ptr %r0, i32 0, i32 %r_i
+
+; 第二级 GEP: 从 [4 x i32]* 索引到 i32*
+%r9 = getelementptr [4 x i32], ptr %r7, i32 0, i32 %r_j
+</code></pre> <p><strong>每级 GEP 的第一个索引是 0</strong>（"解引用"指针本身），第二个索引是实际的数组下标。</p> <h3 id=53>5.3 为什么现有代码已经"几乎"支持多维数组</h3> <p>teac 的一维数组 GEP 生成逻辑已经处理了 <code>identifier[expr]</code> 形式。对于多维数组 <code>mat[i][j]</code>，AST 将其解析为一条<strong>后缀链</strong>：先是 <code>mat[i]</code>（产生一个内层数组的指针），然后 <code>[j]</code>（对内层数组再索引一次）。</p> <p>关键在于：每次 <code>[expr]</code> 后缀的处理都产生一个 GEP，输入指针的类型从外层数组变为内层数组。如果 <code>compose_var_decl_dtype</code> 能正确将 <code>[[i32; 4]; 3]</code> 转换为嵌套的 <code>Dtype::Array</code>，且 <code>function_gen.rs</code> 中的 GEP 生成逻辑能正确处理 <code>Array { Array { ... } }</code> 类型的元素类型提取，那么多维数组就能自然地通过递归后缀处理来支持。</p> <p>因此本特性的核心工作量在于：</p> <ol> <li><strong><code>conversions.rs</code></strong>：确保嵌套的 <code>ast::TypeSpecifierInner::Array</code> 能递归转换为嵌套的 <code>Dtype::Array</code></li> <li><strong><code>type_infer.rs</code></strong>：在推断包含多维数组的表达式时，正确剥离 <code>Array</code> 的外层</li> <li><strong><code>function_gen.rs</code></strong>：确保 GEP 生成在遇到 <code>Array { element: Array { ... } }</code> 时能正确提取内层元素类型</li> </ol> <h3 id=54>5.4 示例</h3> <p>源程序：</p> <pre><code class=language-rust>let mat: [[i32; 4]; 3];
+mat[1][2] = 42;
+let v: i32 = mat[1][2];
+</code></pre> <p>生成的 IR：</p> <pre><code class=language-llvm>%r0 = alloca [3 x [4 x i32]], align 4
+
+; 写入 mat[1][2] = 42
+%r1 = getelementptr [3 x [4 x i32]], ptr %r0, i32 0, i32 1
+%r2 = getelementptr [4 x i32], ptr %r1, i32 0, i32 2
+store i32 42, ptr %r2, align 4
+
+; 读取 mat[1][2]
+%r3 = getelementptr [3 x [4 x i32]], ptr %r0, i32 0, i32 1
+%r4 = getelementptr [4 x i32], ptr %r3, i32 0, i32 2
+%r5 = load i32, ptr %r4, align 4
+</code></pre> <h3 id=55>5.5 测试</h3> <pre><code class=language-bash>cargo test --features multi-dim-array
+</code></pre> <p>每个测试生成 IR 后编译运行，与 <code>.out</code> 文件比对输出。</p> <h2 id=6-impl>6. Impl 块与方法 [三选一]</h2> <h3 id=61-name-mangling>6.1 名称修饰（Name Mangling）</h3> <p>TeaLang 中方法通过 <code>impl</code> 块定义，在 IR 层面以<strong>名称修饰</strong>的方式与自由函数共存。修饰规则是 <code>TypeName::method_name</code>。例如：</p> <pre><code class=language-rust>struct Counter { value: i32 }
+impl Counter {
+    fn get(&amp;self) -&gt; i32 { return self.value; }
+    fn add(&amp;mut self, delta: i32) -&gt; i32 { ... }
+}
+</code></pre> <p>在 IR 中产生两个函数定义：</p> <pre><code class=language-llvm>define dso_local i32 @&quot;Counter::get&quot;(ptr %r0) { ... }
+define dso_local i32 @&quot;Counter::add&quot;(ptr %r0, i32 %r1) { ... }
+</code></pre> <h3 id=62-self>6.2 self 参数的处理</h3> <p><code>&amp;self</code> 和 <code>&amp;mut self</code> 在 IR 层面统一表示为 <code>ptr</code> 参数（指向 <code>%Counter</code> 结构体的指针）。在函数签名中，<code>self</code> 作为第一个参数，类型是 <code>Dtype::ptr_to(Dtype::Struct { type_name: "Counter" })</code>。</p> <p>在函数体内，<code>self.value</code> 被降低为一条 <code>getelementptr</code> 指令：</p> <pre><code class=language-llvm>%r1 = getelementptr %Counter, ptr %r0, i32 0, i32 0
+%r2 = load i32, ptr %r1, align 4
+</code></pre> <p><code>self</code> 参数（<code>%r0</code>）不经过 alloca+store 间接层——它直接注册到局部变量表中，避免额外的 load/store。</p> <h3 id=63-pass-2>6.3 模块级处理（Pass 2）</h3> <p><code>module_gen.rs</code> 的 Pass 2 需要处理 <code>ImplDef</code> 节点：</p> <ol> <li>遍历 <code>impl_def.methods</code>，对每个方法：</li> <li>用 <code>TypeName::method_name</code> 作为修饰后的名称</li> <li>构造 <code>FunctionType</code>，将 <code>self</code> 参数替换为 <code>ptr</code></li> <li>注册到 <code>Registry</code> 和 <code>Module::function_list</code></li> </ol> <p>Pass 3 中，方法的 IR 生成与自由函数完全相同，只是名称使用修饰后的版本。</p> <h3 id=64>6.4 方法调用的解析</h3> <p>调用方有三种语法形式，最终都降低为相同的 IR：</p> <pre><code class=language-rust>c[0].get()                  // 点语法
+c[0].add_twice(7)           // 带参数的点语法
+Counter::get(c[0])          // 显式命名空间语法
+</code></pre> <p>三种形式都产生：</p> <pre><code class=language-llvm>%r0 = getelementptr ..., ptr @c, i32 0, i32 0   ; 获取 c[0] 的指针
+%r1 = call i32 @&quot;Counter::get&quot;(ptr %r0)
+</code></pre> <p>在 <code>function_gen.rs</code> 中，方法调用的 IR 生成需要：</p> <ol> <li><strong>确定接收者的指针</strong>：计算 <code>self</code> 对应的地址操作数（可能经过数组索引和成员访问）</li> <li><strong>拼接修饰名称</strong>：从接收者的类型（<code>Dtype::Struct { type_name }</code> 或其指针）提取类型名，拼接为 <code>TypeName::method</code></li> <li><strong>生成 Call 指令</strong>：将接收者指针作为第一个参数传入</li> </ol> <p>对于 <code>Self::method(self, ...)</code> 形式（在 impl 块内部调用同类型方法），需要将 <code>Self::</code> 替换为当前 impl 的类型名。</p> <h3 id=65>6.5 示例</h3> <p>源程序：</p> <pre><code class=language-rust>struct Counter { value: i32 }
+impl Counter {
+    fn get(&amp;self) -&gt; i32 { return self.value; }
+    fn add(&amp;mut self, delta: i32) -&gt; i32 {
+        self.value = self.value + delta;
+        return self.value;
+    }
+}
+
+let c: [Counter; 1];
+fn main() -&gt; i32 {
+    c[0].value = 10;
+    std::putint(c[0].get());
+    return c[0].get();
+}
+</code></pre> <p>生成的 IR（节选）：</p> <pre><code class=language-llvm>%Counter = type { i32 }
+
+@c = dso_local global [1 x %Counter] zeroinitializer, align 4
+
+define dso_local i32 @&quot;Counter::get&quot;(ptr %r0) {
+&quot;Counter::get&quot;:
+    %r1 = getelementptr %Counter, ptr %r0, i32 0, i32 0
+    %r2 = load i32, ptr %r1, align 4
+    ret i32 %r2
+}
+
+define dso_local i32 @&quot;Counter::add&quot;(ptr %r0, i32 %r1) {
+&quot;Counter::add&quot;:
+    %r3 = getelementptr %Counter, ptr %r0, i32 0, i32 0
+    %r4 = getelementptr %Counter, ptr %r0, i32 0, i32 0
+    %r5 = load i32, ptr %r4, align 4
+    %r7 = add i32 %r5, %r1
+    store i32 %r7, ptr %r3, align 4
+    %r8 = getelementptr %Counter, ptr %r0, i32 0, i32 0
+    %r9 = load i32, ptr %r8, align 4
+    ret i32 %r9
+}
+
+define dso_local i32 @main() {
+main:
+    %r0 = getelementptr [1 x %Counter], ptr @c, i32 0, i32 0
+    %r1 = getelementptr %Counter, ptr %r0, i32 0, i32 0
+    store i32 10, ptr %r1, align 4
+    %r2 = getelementptr [1 x %Counter], ptr @c, i32 0, i32 0
+    %r3 = call i32 @&quot;Counter::get&quot;(ptr %r2)
+    call void @putint(i32 %r3)
+    %r8 = getelementptr [1 x %Counter], ptr @c, i32 0, i32 0
+    %r9 = call i32 @&quot;Counter::get&quot;(ptr %r8)
+    ret i32 %r9
+}
+</code></pre> <h3 id=66>6.6 测试</h3> <pre><code class=language-bash>cargo test --features struct-method
+</code></pre> <p>每个测试生成 IR 后编译运行，与 <code>.out</code> 文件比对输出。</p> <aside class=md-source-file> <span class=md-source-file__fact> <span class=md-icon title=最后更新> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg> </span> 2026-04-24 </span> </aside> <!-- Insert generated snippet here --> <script src=https://giscus.app/client.js data-repo=tea-compiler/tea-compiler.github.io data-repo-id=R_kgDOJ7xC6g data-category=General data-category-id=DIC_kwDOGP67ns4COM9Q data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light_protanopia data-lang=zh-CN data-loading=lazy crossorigin=anonymous async>
+</script> <!-- Synchronize Giscus theme with palette --> <script>
+var giscus = document.querySelector("script[src*=giscus]")
+
+// Set palette on initial load
+var palette = __md_get("__palette")
+if (palette && typeof palette.color === "object") {
+    var theme = palette.color.scheme === "slate"
+    ? "dark_protanopia"
+    : "light_protanopia"
+
+    // Instruct Giscus to set theme
+    giscus.setAttribute("data-theme", theme) 
+}
+
+// Register event handlers after documented loaded
+document.addEventListener("DOMContentLoaded", function() {
+    var ref = document.querySelector("[data-md-component=palette]")
+    ref.addEventListener("change", function() {
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+        var theme = palette.color.scheme === "slate"
+        ? "dark_protanopia"
+        : "light_protanopia"
+
+        // Instruct Giscus to change theme
+        var frame = document.querySelector(".giscus-frame")
+        frame.contentWindow.postMessage(
+        { giscus: { setConfig: { theme } } },
+        "https://giscus.app"
+        )
+    }
+    })
+})
+</script> </article> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg> 回到页面顶部 </button> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"annotate": null, "base": "../..", "features": ["header.autohide", "navigation.tracking", "navigation.top", "search.highlight", "search.share", "search.suggest", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script> <script src=../../assets/javascripts/bundle.79ae519e.min.js></script> <script src=../../js/open_in_new_tab.js></script> </body> </html>
