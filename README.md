@@ -2,7 +2,7 @@
  
 **上课教室 Classroom**：H3306（1:30pm-4:10pm）
 
-**参考书**：[编译授课笔记(2024版)](notes/编译授课笔记_v1_0.pdf)
+**参考书**：[编译授课笔记(2024版)](notes/编译授课笔记_v1.pdf)
 
 **上机教室**：H逸夫楼202/204/205（4:20pm-6:00pm）
 
@@ -20,7 +20,7 @@
 | 6 | 课程小结与研讨 | | 验收实验一 | |
 | 7 | 类型推导 | [slides](slides/L6-类型推导.pdf)，[notes](notes/第6章-类型推导.pdf) | 布置实验二 | [notes](project/asmt2.md) |
 | 8 | 线性IR | [slides](slides/L7-线性IR.pdf), [notes](notes/第7章-线性IR.pdf) | 布置实验三 | [notes](project/asmt3.md) |
-| 9 | 静态单赋值 | [slides](slides/L8-静态单赋值.pdf) | 答疑 |  |
+| 9 | 静态单赋值 | [slides](slides/L8-SSA.pdf)，[notes](notes/第8章-SSA.pdf) | 答疑 |  |
 | 10 | 过程内优化 | <!--[slides](slides/L9-过程内优化.pdf)--> | 答疑 | |
 | 11 | 特邀讲座 | <!--[slides](slides/L10-过程间优化.pdf)--> | 验收实验二 | |
 | 12 | 课程小结与研讨 | | 验收实验三 | |
