@@ -21,10 +21,10 @@
 | 7 | 类型推导 | [slides](slides/L6-类型推导.pdf)，[notes](notes/第6章-类型推导.pdf) | 布置实验二 | [notes](project/asmt2.md) |
 | 8 | 线性IR | [slides](slides/L7-线性IR.pdf), [notes](notes/第7章-线性IR.pdf) | 布置实验三 | [notes](project/asmt3.md) |
 | 9 | 静态单赋值 | [slides](slides/L8-SSA.pdf)，[notes](notes/第8章-SSA.pdf) | 答疑 |  |
-| 10 | 过程内优化 | <!--[slides](slides/L9-过程内优化.pdf)--> | 答疑 | |
+| 10 | 过程内优化 | [slides](slides/L9-过程内优化.pdf) | 答疑 | |
 | 11 | 特邀讲座 | <!--[slides](slides/L10-过程间优化.pdf)--> | 验收实验二 | |
 | 12 | 课程小结与研讨 | | 验收实验三 | |
-| 13 | 指令选择 | <!--[slides](slides/L11-指令选择.pdf)--> | 布置实验四 | |
+| 13 | 指令选择 | [slides](slides/L11-指令选择.pdf) | 布置实验四 | |
 | 14 | 寄存器分配 | <!--[slides](slides/L12-寄存器分配.pdf)--> | 答疑 | |
 | 15 | 后端优化 | <!--[slides](slides/L13-后端优化.pdf)--> | 验收实验四 | |
 
