@@ -24,7 +24,7 @@
 | 10 | 过程内优化 | [slides](slides/L9-过程内优化.pdf) | 答疑 | |
 | 11 | 特邀讲座 | <!--[slides](slides/L10-过程间优化.pdf)--> | 验收实验二 | |
 | 12 | 课程小结与研讨 | | 验收实验三 | |
-| 13 | 指令选择 | [slides](slides/L11-指令选择.pdf) | 布置实验四 | |
+| 13 | 指令选择 | [slides](slides/L11-指令选择.pdf)， [notes](notes/第11章-指令选择.pdf) | 布置实验四 | |
 | 14 | 寄存器分配 | <!--[slides](slides/L12-寄存器分配.pdf)--> | 答疑 | |
 | 15 | 后端优化 | <!--[slides](slides/L13-后端优化.pdf)--> | 验收实验四 | |
 
