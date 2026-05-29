@@ -60,3 +60,4 @@ nav:
   - 实验一 解析抽象语法树 : "project/asmt1.md"
   - 实验二 类型推断 : "project/asmt2.md"
   - 实验三 中间表示生成 : "project/asmt3.md"
+  - 实验四 后端浮点支持 : "project/asmt3.md"
