@@ -26,7 +26,7 @@
 | 12 | 课程小结与研讨 | |  | |
 | 13 | 指令选择 | [slides](slides/L11-指令选择.pdf)， [notes](notes/第11章-指令选择.pdf) | 布置实验四 |[notes](project/asmt4.md) |
 | 14 | 寄存器分配 | [slides](slides/L12-寄存器分配.pdf)， [notes](notes/第12章-寄存器分配.pdf)| 验收实验三 | |
-| 15 | 后端优化 | <!--[slides](slides/L13-后端优化.pdf)--> | 验收实验四 | |
+| 15 | 后端优化 | [slides](slides/L13-后端优化.pdf)， [notes](notes/第13章-后端优化.pdf) | 验收实验四 | |
 
 * 如遇假期，则顺延课程安排。
 
